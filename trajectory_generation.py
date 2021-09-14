@@ -8,7 +8,7 @@ MAX_ACC = np.zeros(7) + 1000
 NUM_ROBOTS = 10
 NUM_JOINTS = 7
 
-BPM = 90
+BPM = 60
 TIME = 60/BPM
 TIME_STEP = 0.001
 

@@ -6,8 +6,8 @@
 # ROBOT_5_NEIGHBORS = [ROBOT_1, ROBOT_2, ROBOT_6, ROBOT_8]
 # ROBOT_6_NEIGHBORS = [ROBOT_2, ROBOT_3, ROBOT_5, ROBOT_7, ROBOT_8, ROBOT_9]
 # ROBOT_7_NEIGHBORS = [ROBOT_3, ROBOT_4, ROBOT_6, ROBOT_9]
-# ROBOT_8_NEIGHTBORS = [ROBOT_2, ROBOT_5, ROBOT_6, ROBOT_9, ROBOT_10]
-# ROBOT_9_NEIGHTBORS = [ROBOT_3, ROBOT_6, ROBOT_7, ROBOT_8, ROBOT_10]
+# ROBOT_8_NEIGHBORS = [ROBOT_2, ROBOT_5, ROBOT_6, ROBOT_9, ROBOT_10]
+# ROBOT_9_NEIGHBORS = [ROBOT_3, ROBOT_6, ROBOT_7, ROBOT_8, ROBOT_10]
 # ROBOT_10_NEIGHBORS = [ROBOT_6, ROBOT_8, ROBOT_9]
 
 from random import randint
@@ -21,6 +21,7 @@ class Robot:
         self.status = 'Dead'
         self.dance = []
         self.dance_t = []
+        self.curr_angle = 90
     
     def set_neighbors(self, neighbors):
         self.neighbors = neighbors
@@ -28,14 +29,20 @@ class Robot:
     def get_neighbors(self):
         return self.neighbors
 
-    def set_die(self):
+    def set_die(self, first=False):
         self.status = 'Dead'
         # call die movement here
+        # if first:
+        #     self.death()
+        # else:
         self.death()
 
-    def set_alive(self):
+    def set_alive(self, first=False):
         self.status = 'Alive'
         #call birth movement here
+        # if first:
+        #     self.first_birth()
+        # else:
         self.birth()
 
     def set_living(self):
@@ -56,48 +63,94 @@ class Robot:
         return self.status
 
     def birth(self):
-        birth_move = np.array([90, 0, 0, 0, 0, 0, 0])
-        birth_time = np.array([4, 4, 4, 4, 4, 4, 4])
+        #joint 4 starts at 90
+        #full alive position for joint 4 at 120
+        if self.curr_angle == 90:
+            birth_move = np.array([0, -30, 0, 30, 0, 0, 0], dtype=object)
+            birth_time = np.array([4, 4, 4, 4, 4, 4, 4], dtype=object)
 
-        self.dance.append(birth_move)
-        self.dance_t.append(birth_time)
+            self.dance.append(birth_move)
+            self.dance_t.append(birth_time)
+
+            self.curr_angle = self.curr_angle + 30
+        else:
+            birth_move = np.array([0, -50, 0, 60, 0, 0, 0], dtype=object)
+            birth_time = np.array([4, 4, 4, 4, 4, 4, 4], dtype=object)
+
+            self.dance.append(birth_move)
+            self.dance_t.append(birth_time)
+
+            self.curr_angle = self.curr_angle + 60
+
+    # def first_birth(self):
+    #     birth_move = np.array([0, -20, 0, 30, 0, 0, 0])
+    #     birth_time = np.array([4, 4, 4, 4, 4, 4, 4])
+    #
+    #     self.dance.append(birth_move)
+    #     self.dance_t.append(birth_time)
 
     def death(self):
-        death_move = np.array([-90, 0, 0, 0, 0, 0, 0])
-        death_time = np.array([4, 4, 4, 4, 4, 4, 4])
+        # joint 4 starts at 90
+        # full death position for joint 4 at 60
+        if self.curr_angle == 90:
+            death_move = np.array([0, 30, 0, -30, 0, 0, 0], dtype=object)
+            death_time = np.array([4, 4, 4, 4, 4, 4, 4], dtype=object)
 
-        self.dance.append(death_move)
-        self.dance_t.append(death_time)
+            self.dance.append(death_move)
+            self.dance_t.append(death_time)
+
+            self.curr_angle = self.curr_angle - 30
+        elif self.curr_angle == 60:
+            self.dying()
+        elif self.curr_angle == 120:
+            death_move = np.array([0, 50, 0, -60, 0, 0, 0], dtype=object)
+            death_time = np.array([4, 4, 4, 4, 4, 4, 4], dtype=object)
+
+            self.dance.append(death_move)
+            self.dance_t.append(death_time)
+
+            self.curr_angle = self.curr_angle - 60
+
+    # def first_death(self):
+    #     death_move = np.array([0, 20, 0, -30, 0, 0, 0])
+    #     death_time = np.array([4, 4, 4, 4, 4, 4, 4])
+    #
+    #     self.dance.append(death_move)
+    #     self.dance_t.append(death_time)
 
     def living(self):
-        living_move = np.array([0, 0, 0, 0, 0, [-10, 10], 0])
-        living_time = np.array([4, 4, 4, 4, 4, [2, 2], 4])
+        living_move = np.array([0, 0, [-15, 15, 15, -15], 0, 0, 0, 0], dtype=object)
+        living_time = np.array([4, 4, [1, 1, 1, 1], 4, 4, 4, 4], dtype=object)
 
         self.dance.append(living_move)
         self.dance_t.append(living_time)
     
     def dying(self):
-        dying_move = np.array([0, 0, 0, 0, [-10, 10], 0, 0])
-        dying_time = np.array([4, 4, 4, 4, [2, 2], 4, 4])
+        dying_move = np.array([[20, -40, 20], 0, 0, 0, 0, 0, 0], dtype=object)
+        dying_time = np.array([[1, 2, 1], 4, 4, 4, 4, 4, 4], dtype=object)
 
         self.dance.append(dying_move)
         self.dance_t.append(dying_time)
 
-
-
 class Game:
     NUM_ROBOTS = 10
-    INIT_POS = np.zeros(7)
+    INIT_POS = np.array([0, 0, 0, 90, 0, 0, 0])
 
     def _init_(self, robots):
         for robot in robots:
             random = randint(0, 2)
-            robot.set_alive()
+            if random == 1:
+                robot.set_alive(True)
+            else:
+                robot.set_die(True)
 
     def revive(self, robots):
         for robot in robots:
             random = randint(0, 2)
-            robot.set_alive()
+            if random == 1:
+                robot.set_alive()
+            else:
+                robot.set_die()
 
 
     def change_state(self, robots):
@@ -149,7 +202,9 @@ class Game:
         for robot in robots:
             random = randint(0, 2)
             if random == 1:
-                robot.set_alive()
+                robot.set_alive(True)
+            else:
+                robot.set_die(True)
 
         curr_state = ''
         for robot in robots:
@@ -174,20 +229,21 @@ class Game:
         for robot in range(self.NUM_ROBOTS):
             robot_loc = 7 * (robot)
             for i in range(7):
-                # trajectory[i + robot_loc, :] = trajectory[i + robot_loc, :] + self.INIT_POS
-                trajectory[i + robot_loc, :] = trajectory[i + robot_loc, :]
+                trajectory[i + robot_loc, :] = trajectory[i + robot_loc, :] + self.INIT_POS[i]
+               # trajectory[i + robot_loc, :] = trajectory[i + robot_loc, :]
                 if i < 3:
                     trajectory[i, :] = -1 * trajectory[i, :]
 
         final_position_db = np.transpose(trajectory)
         final_position = final_position_db[0::6, :]
 
-        pd.DataFrame(final_position).to_csv("dance_pattern_pos_1.csv")
+        df = pd.DataFrame(final_position).astype(float)
+        df.to_csv("/home/forest/Desktop/xArm/Trajectories2/000027gameoflife.csv", header=False, index=False)
 
-        final_trajectory = velocity
-        final_trajectory = np.transpose(final_trajectory)
-
-        pd.DataFrame(final_trajectory).to_csv("dance_groove_vel_1.csv")
+        # final_trajectory = velocity
+        # final_trajectory = np.transpose(final_trajectory)
+        #
+        # pd.DataFrame(final_trajectory).to_csv("dance_groove_vel_1.csv")
 
 
 def init_robots():
@@ -223,8 +279,9 @@ def init_robots():
 def main():
     robots = init_robots()
     game = Game()
-    game.run_game(robots, 4)
-    game.print_dance(robots, 4)
+    iterations = 5
+    game.run_game(robots, iterations)
+    game.print_dance(robots, iterations)
 
 main()
             
