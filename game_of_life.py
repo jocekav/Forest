@@ -54,10 +54,22 @@ class Robot:
         self.status = 'Dying'
         #call dying movement here
         self.dying()
+
+    def set_inactive(self):
+        self.status = 'Inactive'
+        self.inactive()
     
     def is_alive(self):
         if self.status == 'Alive' or self.status == 'Living':
             return True
+        else:
+            return False
+    
+    def is_inactive(self):
+        if self.status == 'Inactive':
+            return True
+        else:
+            return False
     
     def get_status(self):
         return self.status
@@ -131,6 +143,13 @@ class Robot:
 
         self.dance.append(dying_move)
         self.dance_t.append(dying_time)
+    
+    def inactive(self):
+        inactive_move = np.array([0, 0, 0, 0, 0, 0, 0], dtype=object)
+        inactive_time = np.array([4, 4, 4, 4, 4, 4, 4], dtype=object)
+
+        self.dance.append(inactive_move)
+        self.dance_t.append(inactive_time)
 
 class Game:
     NUM_ROBOTS = 10
@@ -197,6 +216,7 @@ class Game:
         
         if death_count == 9:
             self.revive(robots)
+
     
     def run_game(self, robots, iterations):
         for robot in robots:
@@ -213,6 +233,95 @@ class Game:
 
         for i in range(iterations):
             self.change_state(robots)
+            curr_state = ''
+            for robot in robots:
+                curr_state = curr_state + robot.get_status() + ' '
+            print(curr_state)
+
+    def change_state_contagion(self, robots):
+        birth = []
+        kill = []
+        living = []
+        dying = []
+        death_count = 0
+
+        for robot in robots:
+            
+            neighbors = robot.get_neighbors()
+            live_neighbors = 0
+            active_neighbors = 0
+            total_neighbors = len(neighbors)
+            half_neighbors = int(total_neighbors / 2)
+            for neighbor in neighbors:
+                if neighbor.is_alive():
+                    live_neighbors += 1
+                if not neighbor.is_inactive():
+                    active_neighbors += 1
+
+            curr_robot_living = robot.is_alive()
+            curr_robot_inactive = robot.is_inactive()
+
+            if curr_robot_living:
+                if live_neighbors == 0:
+                    kill.append(robot)
+                elif live_neighbors >= half_neighbors:
+                    kill.append(robot)
+                else:
+                    living.append(robot)
+            elif curr_robot_inactive:
+                if live_neighbors >= half_neighbors or active_neighbors >= 1:
+                    birth.append(robot)
+            else:
+                if live_neighbors >= half_neighbors:
+                    birth.append(robot)
+                else:
+                    dying.append(robot)
+                    death_count += 1
+            
+        for i in birth:
+            i.set_alive()
+        for i in kill:
+            i.set_die()
+        for i in living:
+            i.set_living()
+        for i in dying:
+            i.set_dying()
+        
+        if death_count == 9:
+            self.revive(robots)
+
+    def run_game_contagion(self, robots, first_robot, iterations):
+        for robot in robots:
+            robot.set_inactive()
+        robots[first_robot].set_alive() 
+
+        # for robot in robots:
+        #     random = randint(0, 2)
+        #     if random == 1:
+        #         robot.set_alive(True)
+        #     else:
+        #         robot.set_die(True)
+
+        curr_state = ''
+        for robot in robots:
+            curr_state = curr_state + robot.get_status() + ' '
+        print(curr_state)
+
+        for robot in robots:
+            robot.set_inactive()
+        robots[first_robot].set_living()
+
+        curr_state = ''
+        for robot in robots:
+            curr_state = curr_state + robot.get_status() + ' '
+        print(curr_state)
+
+        # look at neighbors before waking up?
+
+        # robots[first_robot].get_neighbors()
+
+        for i in range(iterations):
+            self.change_state_contagion(robots)
             curr_state = ''
             for robot in robots:
                 curr_state = curr_state + robot.get_status() + ' '
@@ -238,7 +347,7 @@ class Game:
         final_position = final_position_db[0::6, :]
 
         df = pd.DataFrame(final_position).astype(float)
-        df.to_csv("/home/forest/Desktop/xArm/Trajectories2/000027gameoflife.csv", header=False, index=False)
+        #df.to_csv("/home/forest/Desktop/xArm/Trajectories2/000027gameoflife.csv", header=False, index=False)
 
         # final_trajectory = velocity
         # final_trajectory = np.transpose(final_trajectory)
@@ -276,11 +385,19 @@ def init_robots():
 
 
 
+# def main():
+#     robots = init_robots()
+#     game = Game()
+#     iterations = 5
+#     game.run_game(robots, iterations)
+#     game.print_dance(robots, iterations)
+
 def main():
     robots = init_robots()
     game = Game()
     iterations = 5
-    game.run_game(robots, iterations)
+    # game.run_game(robots, iterations)
+    game.run_game_contagion(robots, 0, iterations)
     game.print_dance(robots, iterations)
 
 main()
