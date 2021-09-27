@@ -16,9 +16,8 @@ import trajectory_generation as traj
 import pandas as pd
 import csv
 import time
-import pyaudio
-import wave
-import play_dances
+
+import play_dances_gameoflife
 import threading
 
 class Robot:
@@ -189,6 +188,13 @@ class Game:
                 robot.set_alive(True)
             else:
                 robot.set_die(True)
+
+    def set_dances_arms(self, dances, arms):
+        self.dances = dances
+        self.arms = arms
+
+    def get_dances_arms(self):
+        return self.dances, self.arms
 
     def revive(self, robots):
         for robot in robots:
@@ -422,19 +428,19 @@ def call_dances(alive, dead, living, dying):
 
 
 def alive_dance(robots):
-    play_dances.playDance(30, robots)
+    play_dances_gameoflife.playDance(4, robots)
     ### ADD PROPER DANCE NUMBER ONCE YOU RUN THE CSVS!!!!
 
 def dead_dance(robots):
-    play_dances.playDance(31, robots)
+    play_dances_gameoflife.playDance(8, robots)
     ### ADD PROPER DANCE NUMBER ONCE YOU RUN THE CSVS!!!!
 
 def living_dance(robots):
-    play_dances.playDance(32, robots)
+    play_dances_gameoflife.playDance(5, robots)
     ### ADD PROPER DANCE NUMBER ONCE YOU RUN THE CSVS!!!!
 
 def dying_dance(robots):
-    play_dances.playDance(33, robots)
+    play_dances_gameoflife.playDance(9, robots)
     ### ADD PROPER DANCE NUMBER ONCE YOU RUN THE CSVS!!!!
             
 
@@ -473,11 +479,17 @@ def init_robots():
 #     game.run_game(robots, iterations)
 #     game.print_dance(robots, iterations)
 
+def init_and_run():
+    robots = init_robots()
+    game = Game()
+    iterations = 1
+    game.run_game(robots, iterations)
+
 def main():
     # start = time.time()
     robots = init_robots()
     game = Game()
-    iterations = 5
+    iterations = 1
     game.run_game(robots, iterations)
     # game.run_game_contagion(robots, 0, iterations)
     # game.print_dance(robots, iterations)
@@ -494,7 +506,6 @@ def main():
     # robot2.stop_audio_playback
     # p.terminate()
 
-main()
 
 
   
