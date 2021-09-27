@@ -121,7 +121,7 @@ if __name__ == "__main__":
     # dance = int(input("Please Type the Dance"))
     start = int(input("Type 1 to start"))
     if start == 1:
-        game_of_life_music.init_and_run()
+        game_of_life_music.init_and_run(dances, arms)
     # startbot.append(firstbot)
 
     # endbot = int(input("Please type the finishing Robot"))

@@ -16,6 +16,8 @@ import trajectory_generation as traj
 import pandas as pd
 import csv
 import time
+import wave
+import pyaudio
 
 import play_dances_gameoflife
 import threading
@@ -172,22 +174,23 @@ class Robot:
             self.stream.write(data)
             data = wf.readframes(CHUNK)
         print("playing")
+        # self.stop_audio_playback()
 
     def stop_audio_playback(self):
         self.stream.stop_stream()
         self.stream.close()
 
 class Game:
-    NUM_ROBOTS = 10
-    INIT_POS = np.array([0, 0, 0, 90, 0, 0, 0])
-
-    def _init_(self, robots):
+    
+    def __init__(self, robots, dances, arms):
         for robot in robots:
             random = randint(0, 2)
             if random == 1:
                 robot.set_alive(True)
             else:
                 robot.set_die(True)
+        self.dances = dances
+        self.arms = arms
 
     def set_dances_arms(self, dances, arms):
         self.dances = dances
@@ -257,7 +260,10 @@ class Game:
         if death_count == 9:
             self.revive(robots)
 
-        call_dances(birth_ids, kill_ids, living_ids, dying_ids)
+        # call_dances(birth_ids, kill_ids, living_ids, dying_ids)
+
+        # birth[0].start_audio_playback(self.joy1, self.pa)
+        # kill[0].start_audio_playback(self.sad1, self.pa)
 
     
     def run_game(self, robots, iterations):
@@ -339,7 +345,8 @@ class Game:
         if death_count == 9:
             self.revive(robots)
 
-        call_dances(birth_ids, kill_ids, living_ids, dying_ids)
+        # call_dances(birth_ids, kill_ids, living_ids, dying_ids)
+        
 
     def run_game_contagion(self, robots, first_robot, iterations):
         for robot in robots:
@@ -409,6 +416,11 @@ class Game:
         #
         # pd.DataFrame(final_trajectory).to_csv("dance_groove_vel_1.csv")
 
+    def init_audio(self, sound1, sound2):
+        self.joy1 = wave.open(sound1, 'rb')
+        self.sad1 = wave.open(sound2, 'rb')
+        self.pa = pyaudio.PyAudio()
+
 def call_dances(alive, dead, living, dying):
     t1 = threading.Thread(target=alive_dance, args=([alive]))
     t2 = threading.Thread(target=dead_dance, args=([dead]))
@@ -442,7 +454,7 @@ def living_dance(robots):
 def dying_dance(robots):
     play_dances_gameoflife.playDance(9, robots)
     ### ADD PROPER DANCE NUMBER ONCE YOU RUN THE CSVS!!!!
-            
+
 
 def init_robots():
     
@@ -479,18 +491,21 @@ def init_robots():
 #     game.run_game(robots, iterations)
 #     game.print_dance(robots, iterations)
 
-def init_and_run():
+def init_and_run(dances, arms):
     robots = init_robots()
-    game = Game()
+    game = Game(robots, dances, arms)
+    game.init_audio('Joy.wav', 'Sad.wav')
     iterations = 1
     game.run_game(robots, iterations)
 
 def main():
     # start = time.time()
     robots = init_robots()
-    game = Game()
+    game = Game(robots, [], [])
+    game.init_audio('Joy.wav', 'Sadness.wav')
     iterations = 1
     game.run_game(robots, iterations)
+
     # game.run_game_contagion(robots, 0, iterations)
     # game.print_dance(robots, iterations)
     # end = time.time()
@@ -506,7 +521,7 @@ def main():
     # robot2.stop_audio_playback
     # p.terminate()
 
-
+main()
 
   
                 
