@@ -18,13 +18,15 @@ def cvt(path):
     return return_vector
 
 
-def playDance(step, robots):
+def playDance(step, robots, dances, arms):
     step = dances[step]
+
     length = len(step)
 
     # for a in range (3):
     #     print(2-a)
     #     time.sleep(1)
+    # print(robots)
     for i in range(length):
         start_time = time.time()
         # board.digital[4].mode = pyfirmata.INPUT
@@ -32,11 +34,13 @@ def playDance(step, robots):
         # red = board.digital[4].read()
 
         j_angles = (step[i])
-        # b=6
+        # b=6k
         # arms[b].set_servo_angle_j(angles=j_angles[(b * 7):((b + 1) * 7)], is_radian=False)
-
-        for b in robots:
-            arms[b].set_servo_angle_j(angles=j_angles, is_radian=False)
+        if isinstance(robots, int):
+            arms[robots].set_servo_angle_j(angles=j_angles, is_radian=False)
+        else:
+            for b in robots[0]:
+                arms[b].set_servo_angle_j(angles=j_angles, is_radian=False)
         tts = time.time() - start_time
         sleep = 0.006 - tts
 
@@ -92,9 +96,8 @@ if __name__ == "__main__":
     arms = [arm1, arm2, arm3, arm4, arm5, arm6, arm7, arm8, arm9, arm10]
     totalArms = len(arms)
 
-
     directory = '/home/forest/Desktop/xArm/contagion/'
-    global dances
+
     dances = []
     trajectories = sorted(os.listdir(directory))
     s = time.time()
@@ -116,12 +119,7 @@ if __name__ == "__main__":
         a.set_mode(1)
         a.set_state(0)
 
-    # plt.show()
-    robots_in_cycle = []
-    # dance = int(input("Please Type the Dance"))
     start = int(input("Type 1 to start"))
     if start == 1:
-        game_of_life_music.init_and_run(dances, arms)
-    # startbot.append(firstbot)
-
-    # endbot = int(input("Please type the finishing Robot"))
+        #game_of_life_music.init_and_run(dances, arms)
+        game_of_life_music.init_and_run_contagion(dances, arms)
