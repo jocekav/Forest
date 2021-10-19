@@ -215,7 +215,7 @@ class Game:
         dying_ids = []
         death_count = 0
 
-        sound_states = np.zeros(10)
+        sound_states = np.zeros(20)
 
         for robot in robots:
 
@@ -247,26 +247,30 @@ class Game:
             i.set_alive()
             robot_num = i.get_num()
             birth_ids.append(robot_num)
-            sound_states[robot_num] = 1
+            sound_states[robot_num * 2] = 1
+            sound_states[(robot_num * 2) + 1] = .75
         for i in kill:
             i.set_die()
             robot_num = i.get_num()
             kill_ids.append(robot_num)
-            sound_states[robot_num] = 2
+            sound_states[robot_num * 2] = 2
+            sound_states[(robot_num * 2) + 1] = .5
         for i in living:
             i.set_living()
             robot_num = i.get_num()
             living_ids.append(robot_num)
-            sound_states[robot_num] = 3
+            sound_states[robot_num * 2] = 3
+            sound_states[(robot_num * 2) + 1] = .75
         for i in dying:
             i.set_dying()
             robot_num = i.get_num()
             dying_ids.append(robot_num)
-            sound_states[robot_num] = 4
+            sound_states[robot_num * 2] = 4
+            sound_states[(robot_num * 2) + 1] = .25
         if death_count == 9:
             self.revive(robots)
 
-        call_sound(self.client, sound_states)
+        # call_sound(self.client, sound_states)
 
         for robot in robots:
             curr_state = robot.get_status()
@@ -282,24 +286,26 @@ class Game:
                 robot.set_core_neighbor(True)
                 for neighbor in neighbors:
                     robot_num = neighbor.get_num()
-                    sound_states[robot_num] = 0
+                    sound_states[robot_num * 2] = 0
+                    sound_states[(robot_num * 2) + 1] = 0
             else:
                 robot.set_core_neighbor(False)
         
-        call_sound(self.client, sound_states)
+        # call_sound(self.client, sound_states)
 
         for robot in robots:
             if robot.get_core_neighbor == True:
                 status = robot.get_status()
                 num = robot.get_num()
+                sound_states[(num * 2) + 1] = 1
                 if status == 'Alive':
-                    sound_states[num] = 1
+                    sound_states[num * 2] = 1
                 if status == 'Dead':
-                    sound_states[num] = 2
+                    sound_states[num * 2] = 2
                 if status == 'Living':
-                    sound_states[num] = 3
+                    sound_states[num * 2] = 3
                 if status == 'Dying':
-                    sound_states[num] = 4
+                    sound_states[num * 2] = 4
                 
 
         call_sound(self.client, sound_states)
@@ -457,7 +463,7 @@ class Game:
 def call_sound(client, sound_states):
     print(sound_states)
     client.send_message('arms', sound_states)
-    # time.sleep(8)
+    time.sleep(8)
 
 def call_dances(dances, arms, alive, dead, living, dying):
     t1 = threading.Thread(target=alive_dance, args=([alive], dances, arms))
