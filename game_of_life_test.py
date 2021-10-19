@@ -306,8 +306,8 @@ class Game:
             if robot == robots[first_robot]:
                 robot.set_alive()
             else:
-                # robot.set_inactive()
-                robot.set_die()
+                robot.set_inactive()
+
 
         curr_state = ''
         for robot in robots:
@@ -319,7 +319,7 @@ class Game:
                 robot.set_alive()
             else:
                 # robot.set_inactive()
-                robot.set_die()
+                robot.set_inactive()
 
         curr_state = ''
         for robot in robots:
@@ -345,19 +345,19 @@ class Game:
             dances_t.append(robot.dance_t)
         [trajectory,velocity] = traj.generate_trajectory(dances, dances_t, final_time)
         
-        for robot in range(self.NUM_ROBOTS):
-            robot_loc = 7 * robot
-            for i in range(7):
-                trajectory[i + robot_loc, :] = trajectory[i + robot_loc, :] + self.INIT_POS[i]
-               # trajectory[i + robot_loc, :] = trajectory[i + robot_loc, :]
-                if i < 3:
-                    trajectory[i, :] = -1 * trajectory[i, :]
+        # for robot in range(self.NUM_ROBOTS):
+        #     robot_loc = 7 * robot
+        #     for i in range(7):
+        #         trajectory[i + robot_loc, :] = trajectory[i + robot_loc, :] + self.INIT_POS[i]
+        #        # trajectory[i + robot_loc, :] = trajectory[i + robot_loc, :]
+        #         if i < 3:
+        #             trajectory[i, :] = -1 * trajectory[i, :]
 
-        final_position_db = np.transpose(trajectory)
-        final_position = final_position_db[0::6, :]
+        # final_position_db = np.transpose(trajectory)
+        # final_position = final_position_db[0::6, :]
 
-        df = pd.DataFrame(final_position).astype(float)
-        df.to_csv("/home/forest/Desktop/xArm/Trajectories2/000027gameoflife.csv", header=False, index=False)
+        # df = pd.DataFrame(final_position).astype(float)
+        # df.to_csv("/home/forest/Desktop/xArm/Trajectories2/000027gameoflife.csv", header=False, index=False)
 
         # final_trajectory = velocity
         # final_trajectory = np.transpose(final_trajectory)

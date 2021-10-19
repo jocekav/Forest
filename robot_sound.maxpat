@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 0.0, 0.0, 640.0, 480.0 ],
+		"rect" : [ 277.0, 79.0, 1021.0, 523.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -40,13 +40,144 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-43",
+					"maxclass" : "newobj",
+					"numinlets" : 2,
+					"numoutlets" : 0,
+					"patching_rect" : [ 598.0, 1008.0, 35.0, 22.0 ],
+					"text" : "dac~"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-28",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 829.0, 187.0, 50.0, 22.0 ],
+					"text" : "4"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-26",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 868.0, 218.0, 50.0, 22.0 ],
+					"text" : "4"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-24",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 794.600001513957977, 218.0, 50.0, 22.0 ],
+					"text" : "4"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-22",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 898.0, 251.0, 50.0, 22.0 ],
+					"text" : "4"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-20",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 794.600001513957977, 287.0, 50.0, 22.0 ],
+					"text" : "3"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-16",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 757.0, 251.0, 50.0, 22.0 ],
+					"text" : "1"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-12",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 829.0, 251.0, 50.0, 22.0 ],
+					"text" : "4"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-10",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 935.0, 287.0, 50.0, 22.0 ],
+					"text" : "2"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-4",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 868.0, 287.0, 50.0, 22.0 ],
+					"text" : "1"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-2",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 720.0, 287.0, 50.0, 22.0 ],
+					"text" : "2"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-9",
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 309.80000364780426, 110.0, 332.0, 22.0 ],
-					"text" : "arms 1. 3. 1. 0. 3. 1. 0. 1. 0. 0."
+					"text" : "arms 2. 3. 1. 2. 1. 4. 4. 4. 4. 4."
 				}
 
 			}
@@ -68,7 +199,7 @@
 					"clipheight" : 20.0,
 					"data" : 					{
 						"clips" : [ 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Joy.wav",
+								"absolutepath" : "Joy.wav",
 								"filename" : "Joy.wav",
 								"filekind" : "audiofile",
 								"id" : "u065004982",
@@ -79,10 +210,10 @@
 
 							}
 , 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Sadness.wav",
+								"absolutepath" : "Sadness.wav",
 								"filename" : "Sadness.wav",
 								"filekind" : "audiofile",
-								"id" : "u263005242",
+								"id" : "u118003351",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -90,7 +221,7 @@
 
 							}
 , 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Joy_1.wav",
+								"absolutepath" : "Joy_1.wav",
 								"filename" : "Joy_1.wav",
 								"filekind" : "audiofile",
 								"id" : "u320005472",
@@ -101,10 +232,10 @@
 
 							}
 , 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Sadness_2.wav",
+								"absolutepath" : "Sadness_2.wav",
 								"filename" : "Sadness_2.wav",
 								"filekind" : "audiofile",
-								"id" : "u285005624",
+								"id" : "u190003365",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -226,7 +357,7 @@
 					"clipheight" : 20.0,
 					"data" : 					{
 						"clips" : [ 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Joy.wav",
+								"absolutepath" : "Joy.wav",
 								"filename" : "Joy.wav",
 								"filekind" : "audiofile",
 								"id" : "u827004969",
@@ -237,10 +368,10 @@
 
 							}
 , 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Sadness.wav",
+								"absolutepath" : "Sadness.wav",
 								"filename" : "Sadness.wav",
 								"filekind" : "audiofile",
-								"id" : "u912005235",
+								"id" : "u817003317",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -248,7 +379,7 @@
 
 							}
 , 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Joy_1.wav",
+								"absolutepath" : "Joy_1.wav",
 								"filename" : "Joy_1.wav",
 								"filekind" : "audiofile",
 								"id" : "u460005465",
@@ -259,10 +390,10 @@
 
 							}
 , 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Sadness_2.wav",
+								"absolutepath" : "Sadness_2.wav",
 								"filename" : "Sadness_2.wav",
 								"filekind" : "audiofile",
-								"id" : "u465005611",
+								"id" : "u547003378",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -373,7 +504,7 @@
 					"clipheight" : 20.0,
 					"data" : 					{
 						"clips" : [ 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Joy.wav",
+								"absolutepath" : "Joy.wav",
 								"filename" : "Joy.wav",
 								"filekind" : "audiofile",
 								"id" : "u104004955",
@@ -384,10 +515,10 @@
 
 							}
 , 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Sadness.wav",
+								"absolutepath" : "Sadness.wav",
 								"filename" : "Sadness.wav",
 								"filekind" : "audiofile",
-								"id" : "u963005228",
+								"id" : "u448003293",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -395,7 +526,7 @@
 
 							}
 , 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Joy_1.wav",
+								"absolutepath" : "Joy_1.wav",
 								"filename" : "Joy_1.wav",
 								"filekind" : "audiofile",
 								"id" : "u131005458",
@@ -406,10 +537,10 @@
 
 							}
 , 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Sadness_2.wav",
+								"absolutepath" : "Sadness_2.wav",
 								"filename" : "Sadness_2.wav",
 								"filekind" : "audiofile",
-								"id" : "u826005598",
+								"id" : "u700003401",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -520,7 +651,7 @@
 					"clipheight" : 20.0,
 					"data" : 					{
 						"clips" : [ 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Joy.wav",
+								"absolutepath" : "Joy.wav",
 								"filename" : "Joy.wav",
 								"filekind" : "audiofile",
 								"id" : "u443004941",
@@ -531,10 +662,10 @@
 
 							}
 , 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Sadness.wav",
+								"absolutepath" : "Sadness.wav",
 								"filename" : "Sadness.wav",
 								"filekind" : "audiofile",
-								"id" : "u862005221",
+								"id" : "u993003270",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -542,7 +673,7 @@
 
 							}
 , 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Joy_1.wav",
+								"absolutepath" : "Joy_1.wav",
 								"filename" : "Joy_1.wav",
 								"filekind" : "audiofile",
 								"id" : "u300005451",
@@ -553,10 +684,10 @@
 
 							}
 , 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Sadness_2.wav",
+								"absolutepath" : "Sadness_2.wav",
 								"filename" : "Sadness_2.wav",
 								"filekind" : "audiofile",
-								"id" : "u144005585",
+								"id" : "u685003424",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -667,7 +798,7 @@
 					"clipheight" : 20.0,
 					"data" : 					{
 						"clips" : [ 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Joy.wav",
+								"absolutepath" : "Joy.wav",
 								"filename" : "Joy.wav",
 								"filekind" : "audiofile",
 								"id" : "u252004927",
@@ -678,10 +809,10 @@
 
 							}
 , 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Sadness.wav",
+								"absolutepath" : "Sadness.wav",
 								"filename" : "Sadness.wav",
 								"filekind" : "audiofile",
-								"id" : "u208005214",
+								"id" : "u728003232",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -689,7 +820,7 @@
 
 							}
 , 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Joy_1.wav",
+								"absolutepath" : "Joy_1.wav",
 								"filename" : "Joy_1.wav",
 								"filekind" : "audiofile",
 								"id" : "u329005444",
@@ -700,10 +831,10 @@
 
 							}
 , 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Sadness_2.wav",
+								"absolutepath" : "Sadness_2.wav",
 								"filename" : "Sadness_2.wav",
 								"filekind" : "audiofile",
-								"id" : "u074005572",
+								"id" : "u887003437",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -814,7 +945,7 @@
 					"clipheight" : 20.0,
 					"data" : 					{
 						"clips" : [ 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Joy.wav",
+								"absolutepath" : "Joy.wav",
 								"filename" : "Joy.wav",
 								"filekind" : "audiofile",
 								"id" : "u134004913",
@@ -825,10 +956,10 @@
 
 							}
 , 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Sadness.wav",
+								"absolutepath" : "Sadness.wav",
 								"filename" : "Sadness.wav",
 								"filekind" : "audiofile",
-								"id" : "u658005207",
+								"id" : "u467003219",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -836,7 +967,7 @@
 
 							}
 , 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Joy_1.wav",
+								"absolutepath" : "Joy_1.wav",
 								"filename" : "Joy_1.wav",
 								"filekind" : "audiofile",
 								"id" : "u560005437",
@@ -847,10 +978,10 @@
 
 							}
 , 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Sadness_2.wav",
+								"absolutepath" : "Sadness_2.wav",
 								"filename" : "Sadness_2.wav",
 								"filekind" : "audiofile",
-								"id" : "u775005559",
+								"id" : "u271003460",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -961,7 +1092,7 @@
 					"clipheight" : 20.0,
 					"data" : 					{
 						"clips" : [ 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Joy.wav",
+								"absolutepath" : "Joy.wav",
 								"filename" : "Joy.wav",
 								"filekind" : "audiofile",
 								"id" : "u997004900",
@@ -972,10 +1103,10 @@
 
 							}
 , 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Sadness.wav",
+								"absolutepath" : "Sadness.wav",
 								"filename" : "Sadness.wav",
 								"filekind" : "audiofile",
-								"id" : "u112005200",
+								"id" : "u792003205",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -983,7 +1114,7 @@
 
 							}
 , 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Joy_1.wav",
+								"absolutepath" : "Joy_1.wav",
 								"filename" : "Joy_1.wav",
 								"filekind" : "audiofile",
 								"id" : "u271005430",
@@ -994,10 +1125,10 @@
 
 							}
 , 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Sadness_2.wav",
+								"absolutepath" : "Sadness_2.wav",
 								"filename" : "Sadness_2.wav",
 								"filekind" : "audiofile",
-								"id" : "u936005546",
+								"id" : "u240003473",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1108,7 +1239,7 @@
 					"clipheight" : 20.0,
 					"data" : 					{
 						"clips" : [ 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Joy.wav",
+								"absolutepath" : "Joy.wav",
 								"filename" : "Joy.wav",
 								"filekind" : "audiofile",
 								"id" : "u582004887",
@@ -1119,10 +1250,10 @@
 
 							}
 , 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Sadness.wav",
+								"absolutepath" : "Sadness.wav",
 								"filename" : "Sadness.wav",
 								"filekind" : "audiofile",
-								"id" : "u619005193",
+								"id" : "u207003191",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1130,7 +1261,7 @@
 
 							}
 , 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Joy_1.wav",
+								"absolutepath" : "Joy_1.wav",
 								"filename" : "Joy_1.wav",
 								"filekind" : "audiofile",
 								"id" : "u334005423",
@@ -1141,10 +1272,10 @@
 
 							}
 , 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Sadness_2.wav",
+								"absolutepath" : "Sadness_2.wav",
 								"filename" : "Sadness_2.wav",
 								"filekind" : "audiofile",
-								"id" : "u088005486",
+								"id" : "u607003486",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1255,7 +1386,7 @@
 					"clipheight" : 20.0,
 					"data" : 					{
 						"clips" : [ 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Joy.wav",
+								"absolutepath" : "Joy.wav",
 								"filename" : "Joy.wav",
 								"filekind" : "audiofile",
 								"id" : "u212004838",
@@ -1266,10 +1397,10 @@
 
 							}
 , 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Sadness.wav",
+								"absolutepath" : "Sadness.wav",
 								"filename" : "Sadness.wav",
 								"filekind" : "audiofile",
-								"id" : "u242005186",
+								"id" : "u780003178",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1277,7 +1408,7 @@
 
 							}
 , 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Joy_1.wav",
+								"absolutepath" : "Joy_1.wav",
 								"filename" : "Joy_1.wav",
 								"filekind" : "audiofile",
 								"id" : "u508005416",
@@ -1288,10 +1419,10 @@
 
 							}
 , 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Sadness_2.wav",
+								"absolutepath" : "Sadness_2.wav",
 								"filename" : "Sadness_2.wav",
 								"filekind" : "audiofile",
-								"id" : "u985005533",
+								"id" : "u608003499",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1413,7 +1544,7 @@
 					"clipheight" : 20.0,
 					"data" : 					{
 						"clips" : [ 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Joy.wav",
+								"absolutepath" : "Joy.wav",
 								"filename" : "Joy.wav",
 								"filekind" : "audiofile",
 								"id" : "u017004825",
@@ -1424,10 +1555,10 @@
 
 							}
 , 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Sadness.wav",
+								"absolutepath" : "Sadness.wav",
 								"filename" : "Sadness.wav",
 								"filekind" : "audiofile",
-								"id" : "u580005179",
+								"id" : "u294003092",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1435,7 +1566,7 @@
 
 							}
 , 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Joy_1.wav",
+								"absolutepath" : "Joy_1.wav",
 								"filename" : "Joy_1.wav",
 								"filekind" : "audiofile",
 								"id" : "u608005409",
@@ -1446,10 +1577,10 @@
 
 							}
 , 							{
-								"absolutepath" : "/Users/jocekav/Documents/GitHub/Forest/Sadness_2.wav",
+								"absolutepath" : "Sadness_2.wav",
 								"filename" : "Sadness_2.wav",
 								"filekind" : "audiofile",
-								"id" : "u282005479",
+								"id" : "u367003512",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1672,24 +1803,8 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-14", 0 ],
-					"midpoints" : [ 81.850001513957977, 822.650002896785736, 368.100001513957977, 822.650002896785736 ],
-					"source" : [ "obj-29", 1 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-14", 0 ],
 					"midpoints" : [ 46.100001513957977, 822.650002896785736, 368.100001513957977, 822.650002896785736 ],
 					"source" : [ "obj-29", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-14", 1 ],
-					"midpoints" : [ 258.850001513957977, 822.650002896785736, 381.766668180624663, 822.650002896785736 ],
-					"source" : [ "obj-30", 1 ]
 				}
 
 			}
@@ -1713,6 +1828,15 @@
 				"patchline" : 				{
 					"destination" : [ "obj-14", 2 ],
 					"midpoints" : [ 399.100001513957977, 822.650002896785736, 395.433334847291292, 822.650002896785736 ],
+					"order" : 1,
+					"source" : [ "obj-31", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-43", 0 ],
+					"order" : 0,
 					"source" : [ "obj-31", 0 ]
 				}
 
@@ -1729,6 +1853,15 @@
 				"patchline" : 				{
 					"destination" : [ "obj-14", 3 ],
 					"midpoints" : [ 575.100001513957977, 822.650002896785736, 409.100001513957977, 822.650002896785736 ],
+					"order" : 1,
+					"source" : [ "obj-32", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-43", 0 ],
+					"order" : 0,
 					"source" : [ "obj-32", 0 ]
 				}
 
@@ -1745,6 +1878,15 @@
 				"patchline" : 				{
 					"destination" : [ "obj-14", 4 ],
 					"midpoints" : [ 748.100001513957977, 822.650002896785736, 422.766668180624606, 822.650002896785736 ],
+					"order" : 1,
+					"source" : [ "obj-33", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-43", 0 ],
+					"order" : 0,
 					"source" : [ "obj-33", 0 ]
 				}
 
@@ -1761,6 +1903,15 @@
 				"patchline" : 				{
 					"destination" : [ "obj-14", 5 ],
 					"midpoints" : [ 46.100001513957977, 979.150002896785736, 436.433334847291292, 979.150002896785736 ],
+					"order" : 1,
+					"source" : [ "obj-34", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-43", 1 ],
+					"order" : 0,
 					"source" : [ "obj-34", 0 ]
 				}
 
@@ -1777,6 +1928,15 @@
 				"patchline" : 				{
 					"destination" : [ "obj-14", 6 ],
 					"midpoints" : [ 226.100001513957977, 979.150002896785736, 450.100001513957977, 979.150002896785736 ],
+					"order" : 1,
+					"source" : [ "obj-35", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-43", 1 ],
+					"order" : 0,
 					"source" : [ "obj-35", 0 ]
 				}
 
@@ -1793,6 +1953,15 @@
 				"patchline" : 				{
 					"destination" : [ "obj-14", 7 ],
 					"midpoints" : [ 402.100001513957977, 979.150002896785736, 463.766668180624663, 979.150002896785736 ],
+					"order" : 1,
+					"source" : [ "obj-36", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-43", 1 ],
+					"order" : 0,
 					"source" : [ "obj-36", 0 ]
 				}
 
@@ -1809,6 +1978,15 @@
 				"patchline" : 				{
 					"destination" : [ "obj-14", 8 ],
 					"midpoints" : [ 578.100001513957977, 979.150002896785736, 477.433334847291292, 979.150002896785736 ],
+					"order" : 1,
+					"source" : [ "obj-38", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-43", 1 ],
+					"order" : 0,
 					"source" : [ "obj-38", 0 ]
 				}
 
@@ -1825,6 +2003,15 @@
 				"patchline" : 				{
 					"destination" : [ "obj-14", 9 ],
 					"midpoints" : [ 751.100001513957977, 979.150002896785736, 491.100001513957977, 979.150002896785736 ],
+					"order" : 1,
+					"source" : [ "obj-39", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-43", 1 ],
+					"order" : 0,
 					"source" : [ "obj-39", 0 ]
 				}
 
@@ -1901,7 +2088,80 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-10", 1 ],
+					"order" : 0,
+					"source" : [ "obj-6", 3 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-12", 1 ],
+					"order" : 0,
+					"source" : [ "obj-6", 5 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-16", 1 ],
+					"order" : 0,
+					"source" : [ "obj-6", 4 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-2", 1 ],
+					"order" : 0,
+					"source" : [ "obj-6", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-20", 1 ],
+					"order" : 0,
+					"source" : [ "obj-6", 1 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-22", 1 ],
+					"order" : 0,
+					"source" : [ "obj-6", 6 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-24", 1 ],
+					"order" : 0,
+					"source" : [ "obj-6", 7 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-26", 1 ],
+					"order" : 0,
+					"source" : [ "obj-6", 8 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-28", 1 ],
+					"order" : 0,
+					"source" : [ "obj-6", 9 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-29", 0 ],
+					"order" : 1,
 					"source" : [ "obj-6", 0 ]
 				}
 
@@ -1909,6 +2169,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-30", 0 ],
+					"order" : 1,
 					"source" : [ "obj-6", 1 ]
 				}
 
@@ -1916,6 +2177,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-31", 0 ],
+					"order" : 1,
 					"source" : [ "obj-6", 2 ]
 				}
 
@@ -1923,6 +2185,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-32", 0 ],
+					"order" : 1,
 					"source" : [ "obj-6", 3 ]
 				}
 
@@ -1930,6 +2193,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-33", 0 ],
+					"order" : 1,
 					"source" : [ "obj-6", 4 ]
 				}
 
@@ -1937,6 +2201,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-34", 0 ],
+					"order" : 1,
 					"source" : [ "obj-6", 5 ]
 				}
 
@@ -1944,6 +2209,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-35", 0 ],
+					"order" : 1,
 					"source" : [ "obj-6", 6 ]
 				}
 
@@ -1951,6 +2217,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-36", 0 ],
+					"order" : 1,
 					"source" : [ "obj-6", 7 ]
 				}
 
@@ -1958,6 +2225,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-38", 0 ],
+					"order" : 1,
 					"source" : [ "obj-6", 8 ]
 				}
 
@@ -1965,7 +2233,16 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-39", 0 ],
+					"order" : 1,
 					"source" : [ "obj-6", 9 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-4", 1 ],
+					"order" : 0,
+					"source" : [ "obj-6", 2 ]
 				}
 
 			}

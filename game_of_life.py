@@ -15,6 +15,7 @@ import numpy as np
 import trajectory_generation as traj
 import pandas as pd
 import csv
+import time
 
 class Robot:
     def __init__(self):
@@ -393,13 +394,15 @@ def init_robots():
 #     game.print_dance(robots, iterations)
 
 def main():
+    start = time.time()
     robots = init_robots()
     game = Game()
     iterations = 5
     # game.run_game(robots, iterations)
     game.run_game_contagion(robots, 0, iterations)
     game.print_dance(robots, iterations)
-
+    end = time.time()
+    print(end - start)
 main()
             
                 
