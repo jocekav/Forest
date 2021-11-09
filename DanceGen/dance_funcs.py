@@ -68,7 +68,7 @@ TURN_SMALL_LEFT_S = [0,0,-90,0,0,0,0]
 TURN_SMALL_LEFT_T = [4,4,4,4,4,4,4]
 TURN_SMALL_LEFT = dance_step.Dance_Step("TURN_SMALL_LEFT", dance_step_arr=TURN_SMALL_LEFT_S, dance_step_t_arr=TURN_SMALL_LEFT_T)
 
-WAVE_DIAGONAL_LEFT_S = [[-45, 0],[0, 0, 0, -30, 0],0,[30, 0, 0, 40, -40, 0],0,[30, 0, 60, -60, 0],0],
+WAVE_DIAGONAL_LEFT_S = [[-45, 0],[0, 0, 0, -30, 0],0,[30, 0, 0, 40, -40, 0],0,[30, 0, 60, -60, 0],0]
 WAVE_DIAGONAL_LEFT_T = [[2, 2],[2, 0.5, 0.5, 0.9, 0.1],4,[2, 0.5, 0.25, 0.5, 0.5, 0.25],4,[2, 0.5, 0.5, 0.5, 0.5],4]
 WAVE_DIAGONAL_LEFT = dance_step.Dance_Step("WAVE_DIAGONAL_LEFT", dance_step_arr=WAVE_DIAGONAL_LEFT_S, dance_step_t_arr=WAVE_DIAGONAL_LEFT_T)
 
@@ -81,7 +81,7 @@ SEMI_CIRCLE_T = [[2, 6],8,[2, 3, 3],[2, 3, 3],8,8,8]
 SEMI_CIRCLE = dance_step.Dance_Step("SEMI_CIRCLE", dance_step_arr=SEMI_CIRCLE_S, dance_step_t_arr=SEMI_CIRCLE_T)
 
 LEAN_S = [[90, -180],[0, -45],0,[0, 30],0,[0, 75],0]
-LEAN_T = [[2, 6],8,[2, 6],[2, 6],8,[2, 6],8]
+LEAN_T = [[2, 6],[2, 6],8,[2, 6],8,[2, 6],8]
 LEAN = dance_step.Dance_Step("LEAN", dance_step_arr=LEAN_S, dance_step_t_arr=LEAN_T)
 
 CIRCLE_S = [[90, -180, 180],0,[0, 15, -30, -15, 30],[0, 40, -40, -40, 40],0,0,0]
@@ -96,5 +96,17 @@ dance_step_database = [ISO_LEFT, ISO_RIGHT, KNOCK, WAVE_BACK, WAVE_RIGHT, WAVE_L
                        HEAD_TURN_RIGHT, HEAD_TURN_LEFT, TURN_BIG_RIGHT, TURN_BIG_LEFT, TURN_SMALL_RIGHT,
                        TURN_SMALL_LEFT, WAVE_DIAGONAL_RIGHT, WAVE_DIAGONAL_LEFT, SEMI_CIRCLE, LEAN, CIRCLE, BLOOM]
 
-print(ISO_LEFT.generate_trajectory_csv())
+# returns a dictionary of dance step objects - keys are the step names
+def get_database():
+    dance_dict = {}
+    for step in dance_step_database:
+        step.set_trajectory()
+        dance_dict[step.get_name()] = step
+    return dance_dict
 
+# dances = get_database()
+# print(dances["ISO_LEFT"].get_trajectory()[0])
+# ISO_LEFT.set_trajectory()
+
+database = get_database()
+print(dance_step.get_consecutive_trajectories(["ISO_LEFT", "ISO_LEFT", "ISO_RIGHT"], database)[0][0])

@@ -1,11 +1,14 @@
 from numpy.lib.function_base import iterable
 import pandas as pd
 import numpy as np
+from xarm.wrapper import XArmAPI
+import dance_step
+import time
 # import breath
 
 class Robot:
-    def __init__(self, init_pos=np.array([0, 0, 0, 90, 0, 0, 0])):
-        self.dance_dict = {}
+    def __init__(self, num, ip_address, init_pos=np.array([0, 0, 0, 90, 0, 0, 0])):
+        self.num = num
         self.joint1 = []
         self.joint2 = []
         self.joint3 = []
@@ -23,8 +26,10 @@ class Robot:
         self.joint7_t = []
         self.dance = []
         self.dance_t = []
-        self.curr_angle = 90
         self.init_pos = init_pos
+        self.xarm = XArmAPI(ip_address)
+
+        self.dance_steps = []
     
     def set_neighbors(self, neighbors):
         self.neighbors = neighbors
@@ -32,8 +37,8 @@ class Robot:
     def get_neighbors(self):
         return self.neighbors
 
-# Add a dance step to the robot's stored list of joint angles and joint angle times
-# Expects size 7 dance step and time steo arrays/lists 
+    # Add a dance step to the robot's stored list of joint angles and joint angle times
+    # Expects size 7 dance step and time step arrays/lists 
     def add_dance_step(self, dance_step, dance_step_t):
         self.joint1.append(dance_step[0])
         self.joint2.append(dance_step[1])
@@ -51,8 +56,8 @@ class Robot:
         self.joint6_t.append(dance_step_t[5])
         self.joint7_t.append(dance_step_t[6])
 
-# Calculates trajectory of robot's stored dance steps (stored as joint angles and joint angle times)
-# Assigns constant bpm for all steps to create trajectory
+    # Calculates trajectory of robot's stored dance steps (stored as joint angles and joint angle times)
+    # Assigns constant bpm for all steps to create trajectory
     def calculate_robot_trajectory(self, bpm, final_time=0, time_step=0.001):
         joints = np.array([self.joint1[0], self.joint2[0], self.joint3[0], self.joint4[0], self.joint5[0], self.joint6[0], self.joint7[0]])
         joints_t = np.array([self.joint1_t[0], self.joint2_t[0], self.joint3_t[0], self.joint4_t[0], self.joint5_t[0], self.joint6_t[0], self.joint7_t[0]])
@@ -148,6 +153,29 @@ class Robot:
         
         return trajectory
 
+    def add_dance_step_dict(self, dance_step):
+        self.dance_steps.append(dance_step)
+
+    def play_dances_from_dict(self, dance_dict):
+        trajectories = dance_step.get_consecutive_trajectories(self.dance_steps, dance_dict)
+        for traj in trajectories:
+            length = len(traj)
+            for i in range(length):
+                start_time = time.time()
+
+                j_angles = (traj[i])
+
+                self.xarm.set_servo_angle_j(angles=j_angles, is_radian=False)
+                tts = time.time() - start_time
+                sleep = 0.006 - tts
+
+                if tts > 0.006:
+                    sleep = 0
+                    
+                # print(tts)
+                time.sleep(sleep)
+
+
 # Generate and combine trajectories for an array of robot objects 
 # (uses a constant bpm across all steps and robots)
 def combine_trajectories(robots, bpm, final_time=0, time_step=0.001):
@@ -161,21 +189,56 @@ def combine_trajectories(robots, bpm, final_time=0, time_step=0.001):
     return total_traj_df
 
 def init_robots():
-    
-    ROBOT_1 = Robot()
-    ROBOT_2 = Robot()
-    ROBOT_3 = Robot()
-    ROBOT_4 = Robot()
-    ROBOT_5 = Robot()
-    ROBOT_6 = Robot()
-    ROBOT_7 = Robot()
-    ROBOT_8 = Robot()
-    ROBOT_9 = Robot()
-    ROBOT_10 = Robot()
+    ROBOT_1 = Robot(0, '192.168.1.208')
+    ROBOT_2 = Robot(1, '192.168.1.244')
+    ROBOT_3 = Robot(2, '192.168.1.203')
+    ROBOT_4 = Robot(3, '192.168.1.236')
+    ROBOT_5 = Robot(4, '192.168.1.226')
+    ROBOT_6 = Robot(5, '192.168.1.242')
+    ROBOT_7 = Robot(6, '192.168.1.215')
+    ROBOT_8 = Robot(7, '192.168.1.234')
+    ROBOT_9 = Robot(8, '192.168.1.237')
+    ROBOT_10 = Robot(9, '192.168.1.204')
 
     robots = [ROBOT_1, ROBOT_2, ROBOT_3, ROBOT_4, ROBOT_5, ROBOT_6, ROBOT_7, ROBOT_8, ROBOT_9, ROBOT_10]
 
+    ROBOT_1.set_neighbors([ROBOT_2, ROBOT_5])
+    ROBOT_2.set_neighbors([ROBOT_1, ROBOT_3, ROBOT_5, ROBOT_6, ROBOT_8])
+    ROBOT_3.set_neighbors([ROBOT_2, ROBOT_4, ROBOT_6, ROBOT_7, ROBOT_9])
+    ROBOT_4.set_neighbors([ROBOT_3, ROBOT_7])
+    ROBOT_5.set_neighbors([ROBOT_1, ROBOT_2, ROBOT_6, ROBOT_8])
+    ROBOT_6.set_neighbors([ROBOT_2, ROBOT_3, ROBOT_5, ROBOT_7, ROBOT_8, ROBOT_9])
+    ROBOT_7.set_neighbors([ROBOT_3, ROBOT_4, ROBOT_6, ROBOT_9])
+    ROBOT_8.set_neighbors([ROBOT_2, ROBOT_5, ROBOT_6, ROBOT_9, ROBOT_10])
+    ROBOT_9.set_neighbors([ROBOT_3, ROBOT_6, ROBOT_7, ROBOT_8, ROBOT_10])
+    ROBOT_10.set_neighbors([ROBOT_6, ROBOT_8, ROBOT_9])
+
     return robots
+
+def setup(robots, motion_enable_on=True):
+    for robot in robots:
+        a = robot.xarm
+        a.set_simulation_robot(on_off=False)
+        if motion_enable_on:
+            a.motion_enable(enable=True)
+        a.clean_warn()
+        a.clean_error()
+        a.set_mode(0)
+        a.set_state(0)
+        a.set_servo_angle(angle=[0.0, 0.0, 0.0, 1.57, 0.0, 0, 0.0], wait=False, speed=0.4, acceleration=0.25,
+                          is_radian=True)
+
+def set_up_robots(robots, motion_enable_on=True):
+    setup(robots, motion_enable_on)
+    repeat = input("do we need to repeat? [y/n]")
+    if repeat == 'y':
+        print('state:', robots[0].xarm.state)
+        print('mode:', robots[0].xarm.mode)
+        setup(robots, motion_enable_on)
+    for robot in robots:
+        a = robot.xarm
+        a.set_mode(1)
+        a.set_state(0)
 
 
 nod = np.array([0,[-2, 2], 0, [10, -10], 0, [70, -70], 0])

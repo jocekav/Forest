@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 0.0, 0.0, 640.0, 480.0 ],
+		"rect" : [ 51.0, 104.0, 1197.0, 685.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -39,6 +39,28 @@
 		"subpatcher_template" : "",
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
+				"box" : 				{
+					"id" : "obj-1",
+					"maxclass" : "newobj",
+					"numinlets" : 2,
+					"numoutlets" : 0,
+					"patching_rect" : [ 560.0, 1009.0, 35.0, 22.0 ],
+					"text" : "dac~"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-3",
+					"maxclass" : "newobj",
+					"numinlets" : 3,
+					"numoutlets" : 0,
+					"patching_rect" : [ 999.0, 476.0, 49.0, 22.0 ],
+					"text" : "noteout"
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"fontface" : 0,
 					"fontname" : "Arial",
@@ -222,7 +244,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 872.0, 217.0, 50.0, 22.0 ],
-					"text" : "0.75"
+					"text" : "0.5"
 				}
 
 			}
@@ -234,7 +256,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 845.0, 217.0, 50.0, 22.0 ],
-					"text" : "1"
+					"text" : "2"
 				}
 
 			}
@@ -270,7 +292,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 911.0, 254.0, 50.0, 22.0 ],
-					"text" : "0.75"
+					"text" : "0.5"
 				}
 
 			}
@@ -282,7 +304,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 887.0, 254.0, 50.0, 22.0 ],
-					"text" : "3"
+					"text" : "2"
 				}
 
 			}
@@ -306,7 +328,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 794.600001513957977, 254.0, 50.0, 22.0 ],
-					"text" : "3"
+					"text" : "1"
 				}
 
 			}
@@ -318,7 +340,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 723.0, 254.0, 50.0, 22.0 ],
-					"text" : "0.75"
+					"text" : "0.25"
 				}
 
 			}
@@ -330,7 +352,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 703.0, 254.0, 50.0, 22.0 ],
-					"text" : "1"
+					"text" : "4"
 				}
 
 			}
@@ -366,7 +388,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 863.0, 287.0, 50.0, 22.0 ],
-					"text" : "0.75"
+					"text" : "0.5"
 				}
 
 			}
@@ -378,7 +400,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 841.0, 287.0, 50.0, 22.0 ],
-					"text" : "1"
+					"text" : "2"
 				}
 
 			}
@@ -444,17 +466,6 @@
 			}
 , 			{
 				"box" : 				{
-					"id" : "obj-43",
-					"maxclass" : "newobj",
-					"numinlets" : 2,
-					"numoutlets" : 0,
-					"patching_rect" : [ 598.0, 1008.0, 35.0, 22.0 ],
-					"text" : "dac~"
-				}
-
-			}
-, 			{
-				"box" : 				{
 					"id" : "obj-9",
 					"linecount" : 2,
 					"maxclass" : "message",
@@ -462,7 +473,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 309.80000364780426, 110.0, 332.0, 35.0 ],
-					"text" : "arms 4. 0.25 1. 0.75 1. 0.75 1. 0.75 1. 0.75 3. 0.75 3. 0.75 3. 0.75 1. 0.75 1. 0.75"
+					"text" : "arms 4. 0.25 1. 0.75 2. 0.5 1. 0.75 4. 0.25 1. 0.75 2. 0.5 3. 0.75 2. 0.5 1. 0.75"
 				}
 
 			}
@@ -484,10 +495,10 @@
 					"clipheight" : 20.0,
 					"data" : 					{
 						"clips" : [ 							{
-								"absolutepath" : "Joy.wav",
-								"filename" : "Joy.wav",
+								"absolutepath" : "Joy_short.mp3",
+								"filename" : "Joy_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u065004982",
+								"id" : "u548001118",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -495,10 +506,10 @@
 
 							}
 , 							{
-								"absolutepath" : "Sadness.wav",
-								"filename" : "Sadness.wav",
+								"absolutepath" : "Sadness_short.mp3",
+								"filename" : "Sadness_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u118003351",
+								"id" : "u121001427",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -506,10 +517,10 @@
 
 							}
 , 							{
-								"absolutepath" : "Joy_1.wav",
-								"filename" : "Joy_1.wav",
+								"absolutepath" : "Joy_1_short.mp3",
+								"filename" : "Joy_1_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u320005472",
+								"id" : "u811001125",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -517,10 +528,10 @@
 
 							}
 , 							{
-								"absolutepath" : "Sadness_2.wav",
-								"filename" : "Sadness_2.wav",
+								"absolutepath" : "Sadness_1_short.mp3",
+								"filename" : "Sadness_1_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u190003365",
+								"id" : "u948001440",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -642,10 +653,10 @@
 					"clipheight" : 20.0,
 					"data" : 					{
 						"clips" : [ 							{
-								"absolutepath" : "Joy.wav",
-								"filename" : "Joy.wav",
+								"absolutepath" : "Joy_1_short.mp3",
+								"filename" : "Joy_1_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u827004969",
+								"id" : "u036001104",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -653,10 +664,10 @@
 
 							}
 , 							{
-								"absolutepath" : "Sadness.wav",
-								"filename" : "Sadness.wav",
+								"absolutepath" : "Sadness_1_short.mp3",
+								"filename" : "Sadness_1_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u817003317",
+								"id" : "u016001401",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -664,10 +675,10 @@
 
 							}
 , 							{
-								"absolutepath" : "Joy_1.wav",
-								"filename" : "Joy_1.wav",
+								"absolutepath" : "Joy_2_short.mp3",
+								"filename" : "Joy_2_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u460005465",
+								"id" : "u046001111",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -675,10 +686,10 @@
 
 							}
 , 							{
-								"absolutepath" : "Sadness_2.wav",
-								"filename" : "Sadness_2.wav",
+								"absolutepath" : "Sadness_2_short.mp3",
+								"filename" : "Sadness_2_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u547003378",
+								"id" : "u693001414",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -789,10 +800,10 @@
 					"clipheight" : 20.0,
 					"data" : 					{
 						"clips" : [ 							{
-								"absolutepath" : "Joy.wav",
-								"filename" : "Joy.wav",
+								"absolutepath" : "Joy_2_short.mp3",
+								"filename" : "Joy_2_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u104004955",
+								"id" : "u087001090",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -800,10 +811,10 @@
 
 							}
 , 							{
-								"absolutepath" : "Sadness.wav",
-								"filename" : "Sadness.wav",
+								"absolutepath" : "Sadness_2_short.mp3",
+								"filename" : "Sadness_2_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u448003293",
+								"id" : "u883001375",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -811,10 +822,10 @@
 
 							}
 , 							{
-								"absolutepath" : "Joy_1.wav",
-								"filename" : "Joy_1.wav",
+								"absolutepath" : "Joy_short.mp3",
+								"filename" : "Joy_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u131005458",
+								"id" : "u245001097",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -822,10 +833,10 @@
 
 							}
 , 							{
-								"absolutepath" : "Sadness_2.wav",
-								"filename" : "Sadness_2.wav",
+								"absolutepath" : "Sadness_short.mp3",
+								"filename" : "Sadness_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u700003401",
+								"id" : "u102001388",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -936,10 +947,10 @@
 					"clipheight" : 20.0,
 					"data" : 					{
 						"clips" : [ 							{
-								"absolutepath" : "Joy.wav",
-								"filename" : "Joy.wav",
+								"absolutepath" : "Joy_short.mp3",
+								"filename" : "Joy_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u443004941",
+								"id" : "u231001076",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -947,10 +958,10 @@
 
 							}
 , 							{
-								"absolutepath" : "Sadness.wav",
-								"filename" : "Sadness.wav",
+								"absolutepath" : "Sadness_short.mp3",
+								"filename" : "Sadness_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u993003270",
+								"id" : "u898001349",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -958,10 +969,10 @@
 
 							}
 , 							{
-								"absolutepath" : "Joy_1.wav",
-								"filename" : "Joy_1.wav",
+								"absolutepath" : "Joy_1_short.mp3",
+								"filename" : "Joy_1_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u300005451",
+								"id" : "u138001083",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -969,10 +980,10 @@
 
 							}
 , 							{
-								"absolutepath" : "Sadness_2.wav",
-								"filename" : "Sadness_2.wav",
+								"absolutepath" : "Sadness_1_short.mp3",
+								"filename" : "Sadness_1_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u685003424",
+								"id" : "u402001362",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1083,10 +1094,10 @@
 					"clipheight" : 20.0,
 					"data" : 					{
 						"clips" : [ 							{
-								"absolutepath" : "Joy.wav",
-								"filename" : "Joy.wav",
+								"absolutepath" : "Joy_1_short.mp3",
+								"filename" : "Joy_1_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u252004927",
+								"id" : "u833001060",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1094,10 +1105,10 @@
 
 							}
 , 							{
-								"absolutepath" : "Sadness.wav",
-								"filename" : "Sadness.wav",
+								"absolutepath" : "Sadness_1_short.mp3",
+								"filename" : "Sadness_1_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u728003232",
+								"id" : "u329001323",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1105,10 +1116,10 @@
 
 							}
 , 							{
-								"absolutepath" : "Joy_1.wav",
-								"filename" : "Joy_1.wav",
+								"absolutepath" : "Joy_2_short.mp3",
+								"filename" : "Joy_2_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u329005444",
+								"id" : "u861001068",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1116,10 +1127,10 @@
 
 							}
 , 							{
-								"absolutepath" : "Sadness_2.wav",
-								"filename" : "Sadness_2.wav",
+								"absolutepath" : "Sadness_2_short.mp3",
+								"filename" : "Sadness_2_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u887003437",
+								"id" : "u497001336",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1230,10 +1241,10 @@
 					"clipheight" : 20.0,
 					"data" : 					{
 						"clips" : [ 							{
-								"absolutepath" : "Joy.wav",
-								"filename" : "Joy.wav",
+								"absolutepath" : "Joy_2_short.mp3",
+								"filename" : "Joy_2_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u134004913",
+								"id" : "u807001046",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1241,10 +1252,10 @@
 
 							}
 , 							{
-								"absolutepath" : "Sadness.wav",
-								"filename" : "Sadness.wav",
+								"absolutepath" : "Sadness_2_short.mp3",
+								"filename" : "Sadness_2_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u467003219",
+								"id" : "u022001297",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1252,10 +1263,10 @@
 
 							}
 , 							{
-								"absolutepath" : "Joy_1.wav",
-								"filename" : "Joy_1.wav",
+								"absolutepath" : "Joy_short.mp3",
+								"filename" : "Joy_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u560005437",
+								"id" : "u843001053",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1263,10 +1274,10 @@
 
 							}
 , 							{
-								"absolutepath" : "Sadness_2.wav",
-								"filename" : "Sadness_2.wav",
+								"absolutepath" : "Sadness_short.mp3",
+								"filename" : "Sadness_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u271003460",
+								"id" : "u982001310",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1377,10 +1388,10 @@
 					"clipheight" : 20.0,
 					"data" : 					{
 						"clips" : [ 							{
-								"absolutepath" : "Joy.wav",
-								"filename" : "Joy.wav",
+								"absolutepath" : "Joy_short.mp3",
+								"filename" : "Joy_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u997004900",
+								"id" : "u737001032",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1388,10 +1399,10 @@
 
 							}
 , 							{
-								"absolutepath" : "Sadness.wav",
-								"filename" : "Sadness.wav",
+								"absolutepath" : "Sadness_short.mp3",
+								"filename" : "Sadness_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u792003205",
+								"id" : "u880001271",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1399,10 +1410,10 @@
 
 							}
 , 							{
-								"absolutepath" : "Joy_1.wav",
-								"filename" : "Joy_1.wav",
+								"absolutepath" : "Joy_1_short.mp3",
+								"filename" : "Joy_1_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u271005430",
+								"id" : "u599001039",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1410,10 +1421,10 @@
 
 							}
 , 							{
-								"absolutepath" : "Sadness_2.wav",
-								"filename" : "Sadness_2.wav",
+								"absolutepath" : "Sadness_1_short.mp3",
+								"filename" : "Sadness_1_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u240003473",
+								"id" : "u320001284",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1524,10 +1535,10 @@
 					"clipheight" : 20.0,
 					"data" : 					{
 						"clips" : [ 							{
-								"absolutepath" : "Joy.wav",
-								"filename" : "Joy.wav",
+								"absolutepath" : "Joy_1_short.mp3",
+								"filename" : "Joy_1_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u582004887",
+								"id" : "u494001010",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1535,10 +1546,10 @@
 
 							}
 , 							{
-								"absolutepath" : "Sadness.wav",
-								"filename" : "Sadness.wav",
+								"absolutepath" : "Sadness_1_short.mp3",
+								"filename" : "Sadness_1_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u207003191",
+								"id" : "u487001245",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1546,10 +1557,10 @@
 
 							}
 , 							{
-								"absolutepath" : "Joy_1.wav",
-								"filename" : "Joy_1.wav",
+								"absolutepath" : "Joy_2_short.mp3",
+								"filename" : "Joy_2_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u334005423",
+								"id" : "u209001025",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1557,10 +1568,10 @@
 
 							}
 , 							{
-								"absolutepath" : "Sadness_2.wav",
-								"filename" : "Sadness_2.wav",
+								"absolutepath" : "Sadness_2_short.mp3",
+								"filename" : "Sadness_2_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u607003486",
+								"id" : "u016001258",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1671,10 +1682,10 @@
 					"clipheight" : 20.0,
 					"data" : 					{
 						"clips" : [ 							{
-								"absolutepath" : "Joy.wav",
-								"filename" : "Joy.wav",
+								"absolutepath" : "Joy_2_short.mp3",
+								"filename" : "Joy_2_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u212004838",
+								"id" : "u078000970",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1682,10 +1693,10 @@
 
 							}
 , 							{
-								"absolutepath" : "Sadness.wav",
-								"filename" : "Sadness.wav",
+								"absolutepath" : "Sadness_2_short.mp3",
+								"filename" : "Sadness_2_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u780003178",
+								"id" : "u305001150",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1693,10 +1704,10 @@
 
 							}
 , 							{
-								"absolutepath" : "Joy_1.wav",
-								"filename" : "Joy_1.wav",
+								"absolutepath" : "Joy_short.mp3",
+								"filename" : "Joy_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u508005416",
+								"id" : "u501000999",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1704,10 +1715,10 @@
 
 							}
 , 							{
-								"absolutepath" : "Sadness_2.wav",
-								"filename" : "Sadness_2.wav",
+								"absolutepath" : "Sadness_short.mp3",
+								"filename" : "Sadness_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u608003499",
+								"id" : "u539001232",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1829,10 +1840,10 @@
 					"clipheight" : 20.0,
 					"data" : 					{
 						"clips" : [ 							{
-								"absolutepath" : "Joy.wav",
-								"filename" : "Joy.wav",
+								"absolutepath" : "Joy_short.mp3",
+								"filename" : "Joy_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u017004825",
+								"id" : "u121000956",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1840,10 +1851,10 @@
 
 							}
 , 							{
-								"absolutepath" : "Sadness.wav",
-								"filename" : "Sadness.wav",
+								"absolutepath" : "Sadness_short.mp3",
+								"filename" : "Sadness_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u294003092",
+								"id" : "u544001132",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1851,10 +1862,10 @@
 
 							}
 , 							{
-								"absolutepath" : "Joy_1.wav",
-								"filename" : "Joy_1.wav",
+								"absolutepath" : "Joy_1_short.mp3",
+								"filename" : "Joy_1_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u608005409",
+								"id" : "u826000989",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -1862,10 +1873,10 @@
 
 							}
 , 							{
-								"absolutepath" : "Sadness_2.wav",
-								"filename" : "Sadness_2.wav",
+								"absolutepath" : "Sadness_1_short.mp3",
+								"filename" : "Sadness_1_short.mp3",
 								"filekind" : "audiofile",
-								"id" : "u367003512",
+								"id" : "u447001141",
 								"loop" : 0,
 								"content_state" : 								{
 
@@ -2021,18 +2032,6 @@
 			}
 , 			{
 				"box" : 				{
-					"id" : "obj-5",
-					"maxclass" : "newobj",
-					"numinlets" : 11,
-					"numoutlets" : 11,
-					"outlettype" : [ "", "", "", "", "", "", "", "", "", "", "" ],
-					"patching_rect" : [ 399.600001513957977, 343.600001394748688, 143.0, 22.0 ],
-					"text" : "route 1 2 3 4 5 6 7 8 9 10"
-				}
-
-			}
-, 			{
-				"box" : 				{
 					"id" : "obj-13",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
@@ -2057,103 +2056,49 @@
  ],
 		"lines" : [ 			{
 				"patchline" : 				{
-					"destination" : [ "obj-14", 3 ],
-					"order" : 1,
+					"destination" : [ "obj-1", 0 ],
 					"source" : [ "obj-100", 0 ]
 				}
 
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-43", 0 ],
-					"order" : 0,
-					"source" : [ "obj-100", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-14", 4 ],
-					"order" : 1,
+					"destination" : [ "obj-1", 0 ],
 					"source" : [ "obj-101", 0 ]
 				}
 
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-43", 0 ],
-					"order" : 0,
-					"source" : [ "obj-101", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-14", 5 ],
-					"order" : 1,
+					"destination" : [ "obj-1", 1 ],
 					"source" : [ "obj-102", 0 ]
 				}
 
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-43", 1 ],
-					"order" : 0,
-					"source" : [ "obj-102", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-14", 6 ],
-					"order" : 1,
+					"destination" : [ "obj-1", 1 ],
 					"source" : [ "obj-103", 0 ]
 				}
 
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-43", 1 ],
-					"order" : 0,
-					"source" : [ "obj-103", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-14", 7 ],
-					"order" : 1,
+					"destination" : [ "obj-1", 1 ],
 					"source" : [ "obj-104", 0 ]
 				}
 
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-43", 1 ],
-					"order" : 0,
-					"source" : [ "obj-104", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-14", 8 ],
-					"order" : 1,
+					"destination" : [ "obj-1", 1 ],
 					"source" : [ "obj-105", 0 ]
 				}
 
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-43", 1 ],
-					"order" : 0,
-					"source" : [ "obj-105", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-43", 1 ],
+					"destination" : [ "obj-1", 1 ],
 					"source" : [ "obj-106", 0 ]
 				}
 
@@ -2597,76 +2542,6 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-29", 0 ],
-					"source" : [ "obj-5", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-30", 0 ],
-					"source" : [ "obj-5", 1 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-31", 0 ],
-					"source" : [ "obj-5", 2 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-32", 0 ],
-					"source" : [ "obj-5", 3 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-33", 0 ],
-					"source" : [ "obj-5", 4 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-34", 0 ],
-					"source" : [ "obj-5", 5 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-35", 0 ],
-					"source" : [ "obj-5", 6 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-36", 0 ],
-					"source" : [ "obj-5", 7 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-38", 0 ],
-					"source" : [ "obj-5", 8 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-39", 0 ],
-					"source" : [ "obj-5", 9 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
 					"destination" : [ "obj-97", 1 ],
 					"source" : [ "obj-58", 0 ]
 				}
@@ -2807,6 +2682,14 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-1", 0 ],
+					"order" : 0,
+					"source" : [ "obj-97", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-110", 0 ],
 					"order" : 1,
 					"source" : [ "obj-97", 0 ]
@@ -2815,62 +2698,59 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-14", 0 ],
-					"order" : 0,
-					"source" : [ "obj-97", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-14", 1 ],
+					"destination" : [ "obj-1", 0 ],
 					"source" : [ "obj-98", 0 ]
 				}
 
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-14", 2 ],
-					"order" : 1,
-					"source" : [ "obj-99", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-43", 0 ],
-					"order" : 0,
+					"destination" : [ "obj-1", 0 ],
 					"source" : [ "obj-99", 0 ]
 				}
 
 			}
  ],
 		"dependency_cache" : [ 			{
-				"name" : "Joy.wav",
+				"name" : "Joy_short.mp3",
 				"bootpath" : "~/Documents/GitHub/Forest",
 				"patcherrelativepath" : ".",
-				"type" : "WAVE",
+				"type" : "Mp3",
 				"implicit" : 1
 			}
 , 			{
-				"name" : "Sadness.wav",
+				"name" : "Sadness_short.mp3",
 				"bootpath" : "~/Documents/GitHub/Forest",
 				"patcherrelativepath" : ".",
-				"type" : "WAVE",
+				"type" : "Mp3",
 				"implicit" : 1
 			}
 , 			{
-				"name" : "Joy_1.wav",
+				"name" : "Joy_1_short.mp3",
 				"bootpath" : "~/Documents/GitHub/Forest",
 				"patcherrelativepath" : ".",
-				"type" : "WAVE",
+				"type" : "Mp3",
 				"implicit" : 1
 			}
 , 			{
-				"name" : "Sadness_2.wav",
+				"name" : "Sadness_1_short.mp3",
 				"bootpath" : "~/Documents/GitHub/Forest",
 				"patcherrelativepath" : ".",
-				"type" : "WAVE",
+				"type" : "Mp3",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "Joy_2_short.mp3",
+				"bootpath" : "~/Documents/GitHub/Forest",
+				"patcherrelativepath" : ".",
+				"type" : "Mp3",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "Sadness_2_short.mp3",
+				"bootpath" : "~/Documents/GitHub/Forest",
+				"patcherrelativepath" : ".",
+				"type" : "Mp3",
 				"implicit" : 1
 			}
  ],

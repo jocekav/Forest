@@ -1,8 +1,10 @@
 import numpy as np
+from numpy.core.fromnumeric import transpose
 
 class Dance_Step:
-    def __init__(self, name, bpm=60, dance_step_arr=None, dance_step_t_arr=None, csv_path=None):
+    def __init__(self, name, bpm=60, init_pos=[0, 0, 0, 90, 0, 0, 0], dance_step_arr=None, dance_step_t_arr=None, csv_path=None):
         self.name = name
+        self.init_pos = init_pos
         self.joint1 = []
         self.joint2 = []
         self.joint3 = []
@@ -44,13 +46,31 @@ class Dance_Step:
     def add_angles_from_csv(self, csv_path):
         return
     
-    def generate_trajectory_csv(self, time_step=0.001):
-        joints = np.array([self.joint1[0], self.joint2[0], self.joint3[0], self.joint4[0], self.joint5[0], self.joint6[0], self.joint7[0]])
-        joints_t = np.array([self.joint1_t[0], self.joint2_t[0], self.joint3_t[0], self.joint4_t[0], self.joint5_t[0], self.joint6_t[0], self.joint7_t[0]])
+    def set_trajectory(self, end_pos='init', final_time= 2, time_step=0.001, csv=False):
+        # joints = np.array([self.joint1[0], self.joint2[0], self.joint3[0], self.joint4[0], self.joint5[0], self.joint6[0], self.joint7[0]])
+        # joints_t = np.array([self.joint1_t[0], self.joint2_t[0], self.joint3_t[0], self.joint4_t[0], self.joint5_t[0], self.joint6_t[0], self.joint7_t[0]])
 
-        # joints = [robot.joint1, robot.joint2, robot.joint3, robot.joint4, robot.joint5, robot.joint6, robot.joint7]
-        # joints_t = [robot.joint1_t, robot.joint2_t, robot.joint3_t, robot.joint4_t, robot.joint5_t, robot.joint6_t, robot.joint7_t]
+        joints = [self.joint1[0], self.joint2[0], self.joint3[0], self.joint4[0], self.joint5[0], self.joint6[0], self.joint7[0]]
+        joints_t = [self.joint1_t[0], self.joint2_t[0], self.joint3_t[0], self.joint4_t[0], self.joint5_t[0], self.joint6_t[0], self.joint7_t[0]]
 
+        for i in range(len(joints)):
+            if isinstance(joints[i], (list, tuple, np.ndarray)):
+                if end_pos == 'init':
+                    reset_pos = -1 * sum(joints[i])
+                else:
+                    reset_pos = end_pos[i] - sum(joints[i])
+                joints[i].append(reset_pos)
+                joints_t[i].append(final_time)
+            else:
+                temp = joints[i]
+                temp_t = joints_t[i]
+                if end_pos == 'init':
+                    joints[i] = [temp, -temp]
+                else:
+                    joints[i] = [temp, end_pos[i]-temp]
+                joints_t[i] = [temp_t, final_time]
+
+        
         time_scale = 60 / self.bpm
 
         for i in range(len(joints)):
@@ -130,6 +150,29 @@ class Dance_Step:
                # trajectory[i + robot_loc, :] = trajectory[i + robot_loc, :]
             if i < 3:
                 trajectory[i, :] = -1 * trajectory[i, :]
-                 
-        return trajectory
+
+        trajectory_arr = np.asarray(trajectory)
+        trajectory_arr = np.transpose(trajectory_arr)
+        self.trajectory = trajectory_arr
+        if csv:
+            np.savetxt(self.name + ".csv", trajectory_arr, delimiter =", ", fmt ='% s')     
+        # return trajectory_arr
+
+    def get_trajectory(self):
+        return self.trajectory
+    
+    def get_name(self):
+        return self.name
+
+def get_consecutive_trajectories(dance_steps, dance_dict):
+    trajectories = []
+    for i in range(len(dance_steps)-1):
+        curr_step = dance_dict[dance_steps[i]]
+        next_step = dance_dict[dance_steps[i+1]]
+        curr_step.set_trajectory(next_step.init_pos)
+        trajectories.append(curr_step.get_trajectory())
+    dance_dict[dance_steps[len(dance_steps)-1]].set_trajectory()
+    trajectories.append(curr_step.get_trajectory())
+    return trajectories
+
 

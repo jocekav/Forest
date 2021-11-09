@@ -11,7 +11,7 @@
 
 from random import randint
 import numpy as np
-import trajectory_generation as traj
+# import trajectory_generation as traj
 import pandas as pd
 import csv
 
@@ -22,6 +22,7 @@ import pickle
 import time
 import pythonosc
 from pythonosc import udp_client
+from random import randrange
 
 
 class Robot:
@@ -186,6 +187,7 @@ class Game:
         self.arms = arms
 
         IP = "192.168.1.145"
+        # IP = "128.61.26.203"
         PORT_TO_MAX = 7980
         self.client = udp_client.SimpleUDPClient(IP, PORT_TO_MAX)
 
@@ -204,7 +206,7 @@ class Game:
             else:
                 robot.set_die()
 
-    def change_state(self, robots):
+    def change_state(self, robots, sleep_time):
         birth = []
         birth_ids = []
         kill = []
@@ -308,11 +310,11 @@ class Game:
                     sound_states[num * 2] = 4
                 
 
-        call_sound(self.client, sound_states)
+        call_sound(self.client, sound_states, sleep_time)
         # call_dances(self.dances, self.arms, birth_ids, kill_ids, living_ids, dying_ids)
 
 
-    def run_game(self, robots, iterations):
+    def run_game(self, robots, iterations, sleep_time):
         for robot in robots:
             random = randint(0, 2)
             if random == 1:
@@ -326,13 +328,13 @@ class Game:
         print(curr_state)
 
         for i in range(iterations):
-            self.change_state(robots)
+            self.change_state(robots, sleep_time)
             curr_state = ''
             for robot in robots:
                 curr_state = curr_state + robot.get_status() + ' '
             print(curr_state)
 
-    def change_state_contagion(self, robots):
+    def change_state_contagion(self, robots, sleep_time):
         birth = []
         birth_ids = []
         kill = []
@@ -342,6 +344,8 @@ class Game:
         dying = []
         dying_ids = []
         death_count = 0
+
+        sound_states = np.zeros(20)
 
         for robot in robots:
 
@@ -378,34 +382,50 @@ class Game:
 
         for i in birth:
             i.set_alive()
-            birth_ids.append(i.get_num())
+            robot_num = i.get_num()
+            birth_ids.append(robot_num)
+            sound_states[robot_num * 2] = 1
+            sound_states[(robot_num * 2) + 1] = .75
         for i in kill:
             i.set_die()
-            kill_ids.append(i.get_num())
+            robot_num = i.get_num()
+            kill_ids.append(robot_num)
+            sound_states[robot_num * 2] = 2
+            sound_states[(robot_num * 2) + 1] = .5
         for i in living:
             i.set_living()
-            living_ids.append(i.get_num())
+            robot_num = i.get_num()
+            living_ids.append(robot_num)
+            sound_states[robot_num * 2] = 3
+            sound_states[(robot_num * 2) + 1] = .75
         for i in dying:
             i.set_dying()
-            dying_ids.append(i.get_num())
+            robot_num = i.get_num()
+            dying_ids.append(robot_num)
+            sound_states[robot_num * 2] = 4
+            sound_states[(robot_num * 2) + 1] = .25
         if death_count == 9:
             self.revive(robots)
 
-        call_sound(self.client, birth_ids, kill_ids, living_ids, dying_ids)
+        call_sound(self.client, sound_states, sleep_time)
         # call_dances(self.dances, self.arms, birth_ids, kill_ids, living_ids, dying_ids)
 
-    def run_game_contagion(self, robots, first_robot, iterations):
+    def run_game_contagion(self, robots, first_robot, iterations, sleep_time):
         for robot in robots:
             robot.set_inactive()
         robots[first_robot].set_alive()
 
+        sound_states = np.zeros(20)
 
         curr_state = ''
         for robot in robots:
             curr_state = curr_state + robot.get_status() + ' '
         print(curr_state)
 
-        call_sound(self.client, [first_robot], [], [], [])
+        sound_states[first_robot * 2] = 1
+        sound_states[(first_robot * 2) + 1] = .75
+
+        call_sound(self.client, sound_states, sleep_time)
         #alive_dance(first_robot, self.dances, self.arms)
 
         for robot in robots:
@@ -417,7 +437,10 @@ class Game:
             curr_state = curr_state + robot.get_status() + ' '
         print(curr_state)
 
-        call_sound(self.client, [], [], [first_robot], [])
+        sound_states[first_robot * 2] = 3
+        sound_states[(first_robot * 2) + 1] = .75
+
+        call_sound(self.client, sound_states, sleep_time)
         #living_dance(first_robot, self.dances, self.arms)
 
         # look at neighbors before waking up?
@@ -425,7 +448,7 @@ class Game:
         # robots[first_robot].get_neighbors()
 
         for i in range(iterations):
-            self.change_state_contagion(robots)
+            self.change_state_contagion(robots, sleep_time)
             curr_state = ''
             for robot in robots:
                 curr_state = curr_state + robot.get_status() + ' '
@@ -460,10 +483,10 @@ class Game:
         # pd.DataFrame(final_trajectory).to_csv("dance_groove_vel_1.csv")
 
 
-def call_sound(client, sound_states):
+def call_sound(client, sound_states, sleep_time):
     print(sound_states)
     client.send_message('arms', sound_states)
-    time.sleep(8)
+    time.sleep(sleep_time)
 
 def call_dances(dances, arms, alive, dead, living, dying):
     t1 = threading.Thread(target=alive_dance, args=([alive], dances, arms))
@@ -550,11 +573,16 @@ def test_without_arms():
     # start = time.time()
     robots = init_robots()
     game = Game(robots, [], [])
-    iterations = 2
+    # iterations = 10
     # game.init_audio('Joy.wav', 'Sadness.wav')
-    game.run_game(robots, iterations)
-    first_robot = 0
-    # game.run_game_contagion(robots, first_robot, iterations)
+    #game.run_game(robots, 4)
+    first_robot = randrange(10)
+    game.run_game_contagion(robots, first_robot, 6, 5)
+    first_robot = randrange(10)
+    game.run_game_contagion(robots, first_robot, 6, 3)
+    first_robot = randrange(10)
+    game.run_game_contagion(robots, first_robot, 6, 1)
+
 
 
 test_without_arms()
