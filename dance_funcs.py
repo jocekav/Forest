@@ -92,14 +92,34 @@ BLOOM_S = [0,[0, -40],0,[0, 30],0,[-25, 8],0]
 BLOOM_T = [11,[1, 10],11,[1, 10],11,[5.5, 5.5],11]
 BLOOM = dance_step.Dance_Step("BLOOM", dance_step_arr=BLOOM_S, dance_step_t_arr=BLOOM_T)
 
-ALIVE_S = [0, -30, 0, 30, 0, 0, 0]
-ALIVE_T = [4, 4, 4, 4, 4, 4, 4]
+ALIVE_S = [[0, 90, 0], [-30, 90], 0, [30, 60], 0, 0, 0]
+ALIVE_T = [[1, 1, 2], [1, 3], 4, [1, 3], 4, 4, 4]
 ALIVE = dance_step.Dance_Step("ALIVE", dance_step_arr=ALIVE_S, dance_step_t_arr=ALIVE_T)
+
+DEAD_S = [[0, 90, 0], [30, -90], 0, [-30, 60], 0, 0, 0]
+DEAD_T = [[1, 1, 2], [1, 3], 4, [1, 3], 4, 4, 4]
+DEAD = dance_step.Dance_Step("DEAD", dance_step_arr=DEAD_S, dance_step_t_arr=DEAD_T)
+
+DYING_S = [0, 0, 0, [-45, 0, 45], [0, -30, 60, -30], [30, 0, -30], 0]
+DYING_T = [4, 4, 4, [1, 2, 1], [1, 1, 1, 1], [1, 2, 1], 4]
+DYING = dance_step.Dance_Step("DYING", dance_step_arr=DYING_S, dance_step_t_arr=DYING_T, init_pos=[90, -60, 0, 120, 0, 0, 0])
+
+LIVING_S = [0, 0, [0, -30, 60, -30], 0, [45, 0, -45], [40, 0, -40], 0]
+LIVING_T = [4, 4, [1, 1, 1, 1], 4, [1, 2, 1], [1, 2, 1], 4]
+LIVING = dance_step.Dance_Step("LIVING", dance_step_arr=LIVING_S, dance_step_t_arr=LIVING_T, init_pos=[90, 60, 0, 180, 0, 0, 0])
+
+ALIVE_2_DEAD_S = [0, -120, 0, -60, 0, 0, 0]
+ALIVE_2_DEAD_T = [4, 4, 4, 4, 4, 4, 4]
+ALIVE_2_DEAD = dance_step.Dance_Step("ALIVE_2_DEAD", dance_step_arr=ALIVE_2_DEAD_S, dance_step_t_arr=ALIVE_2_DEAD_T, init_pos=[90, 60, 0, 180, 0, 0, 0])
+
+DEAD_2_ALIVE_S = [0, 120, 0, 60, 0, 0, 0]
+DEAD_2_ALIVE_T = [4, 4, 4, 4, 4, 4, 4]
+DEAD_2_ALIVE = dance_step.Dance_Step("DEAD_2_ALIVE", dance_step_arr=DEAD_2_ALIVE_S, dance_step_t_arr=DEAD_2_ALIVE_T, init_pos=[90, -60, 0, 120, 0, 0, 0])
 
 dance_step_database = [ISO_LEFT, ISO_RIGHT, KNOCK, WAVE_BACK, WAVE_RIGHT, WAVE_LEFT, LEAN_BACK, DIP, HEAD_DOWN, HEAD_UP,
                        HEAD_TURN_RIGHT, HEAD_TURN_LEFT, TURN_BIG_RIGHT, TURN_BIG_LEFT, TURN_SMALL_RIGHT,
                        TURN_SMALL_LEFT, WAVE_DIAGONAL_RIGHT, WAVE_DIAGONAL_LEFT, SEMI_CIRCLE, LEAN, CIRCLE, BLOOM,
-                       ALIVE]
+                       ALIVE, DEAD, DYING, LIVING, ALIVE_2_DEAD, DEAD_2_ALIVE]
 
 # returns a dictionary of dance step objects - keys are the step names
 def get_database():
@@ -111,8 +131,14 @@ def get_database():
 
 # dances = get_database()
 # print(dances["ISO_LEFT"].get_trajectory()[0])
-# ISO_LEFT.set_trajectory()
+ALIVE.set_trajectory(csv=True)
+DEAD.set_trajectory(csv=True)
+LIVING.set_trajectory(csv=True)
+DYING.set_trajectory(csv=True)
+ALIVE_2_DEAD.set_trajectory(csv=True)
+DEAD_2_ALIVE.set_trajectory(csv=True)
+
 
 database = get_database()
 # print(database["ISO_LEFT"])
-print(dance_step.get_consecutive_trajectories(["ISO_LEFT", "ISO_LEFT"], database)[0])
+# print(dance_step.get_consecutive_trajectories(["ISO_LEFT", "ISO_LEFT"], database)[0])

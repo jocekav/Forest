@@ -7,10 +7,10 @@ dance_step_database = dance_funcs.get_database()
 
 robots = robot.init_robots()
 # robots[0].add_dance_step_dict(["ISO_LEFT", "ISO_LEFT", "ISO_RIGHT"])
-robots[1].add_dance_step_dict(["HEAD_UP"])
+robots[0].add_dance_step_dict(["ALIVE", "ALIVE_2_DEAD", "DEAD_2_ALIVE"])
 
 robot.set_up_robots(robots, False)
-robots[1].play_dances_from_dict(dance_step_database)
+robots[0].play_dances_from_dict(dance_step_database)
 
 
 

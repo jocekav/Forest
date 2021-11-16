@@ -3,7 +3,7 @@ from numpy.core.fromnumeric import transpose
 
 
 class Dance_Step:
-    def __init__(self, name, bpm=70, init_pos=[0, 0, 0, 90, 0, 0, 0], dance_step_arr=None, dance_step_t_arr=None,
+    def __init__(self, name, bpm=90, init_pos=[0, 0, 0, 90, 0, 0, 0], dance_step_arr=None, dance_step_t_arr=None,
                  csv_path=None):
         self.name = name
         self.init_pos = init_pos
@@ -80,26 +80,26 @@ class Dance_Step:
         #             if (end_pos[i] - temp) != end_pos[i]:
         #                 same_flag = False
         #                 break
-        for i in range(len(joints)):
-            if isinstance(joints[i], (list, tuple, np.ndarray)):
-                if end_pos == 'init':
-                    reset_pos = -1 * sum(joints[i])
-                elif end_pos == self.init_pos:
-                    reset_pos = -1 * sum(joints[i])
-                else:
-                    reset_pos = end_pos[i] - sum(joints[i])
-                joints[i].append(reset_pos)
-                joints_t[i].append(final_time)
-            else:
-                temp = joints[i]
-                temp_t = joints_t[i]
-                if end_pos == 'init':
-                    joints[i] = [temp, -temp]
-                elif end_pos == self.init_pos:
-                    joints[i] = [temp, -temp]
-                else:
-                    joints[i] = [temp, end_pos[i] - temp]
-                joints_t[i] = [temp_t, final_time]
+        # for i in range(len(joints)):
+        #     if isinstance(joints[i], (list, tuple, np.ndarray)):
+        #         if end_pos == 'init':
+        #             reset_pos = -1 * sum(joints[i])
+        #         elif end_pos == self.init_pos:
+        #             reset_pos = -1 * sum(joints[i])
+        #         else:
+        #             reset_pos = end_pos[i] - sum(joints[i])
+        #         joints[i].append(reset_pos)
+        #         joints_t[i].append(final_time)
+        #     else:
+        #         temp = joints[i]
+        #         temp_t = joints_t[i]
+        #         if end_pos == 'init':
+        #             joints[i] = [temp, -temp]
+        #         elif end_pos == self.init_pos:
+        #             joints[i] = [temp, -temp]
+        #         else:
+        #             joints[i] = [temp, end_pos[i] - temp]
+        #         joints_t[i] = [temp_t, final_time]
 
         time_scale = 60 / self.bpm
 

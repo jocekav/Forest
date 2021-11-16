@@ -19,7 +19,7 @@ from xarm.wrapper import XArmAPI
 # import breath
 
 class Robot:
-    def __init__(self, num, ip_address, init_pos=np.array([0, 0, 0, 90, 0, 0, 0])):
+    def __init__(self, num, ip_address=None, init_pos=np.array([0, 0, 0, 90, 0, 0, 0])):
         self.num = num
         self.joint1 = []
         self.joint2 = []
@@ -39,7 +39,8 @@ class Robot:
         self.dance = []
         self.dance_t = []
         self.init_pos = init_pos
-        self.xarm = XArmAPI(ip_address)
+        if ip_address is not None:
+            self.xarm = XArmAPI(ip_address)
 
         self.dance_steps = []
 
@@ -234,29 +235,31 @@ def init_robots():
     # sys.path.append(os.path.join(os.path.dirname(__file__), '../../..'))
     # from xarm.wrapper import XArmAPI
 
-    ROBOT_1 = Robot(0, '192.168.1.208')
-    ROBOT_2 = Robot(1, '192.168.1.244')
-    ROBOT_3 = Robot(2, '192.168.1.203')
-    ROBOT_4 = Robot(3, '192.168.1.236')
-    ROBOT_5 = Robot(4, '192.168.1.226')
-    ROBOT_6 = Robot(5, '192.168.1.242')
-    ROBOT_7 = Robot(6, '192.168.1.215')
-    ROBOT_8 = Robot(7, '192.168.1.234')
-    ROBOT_9 = Robot(8, '192.168.1.237')
-    ROBOT_10 = Robot(9, '192.168.1.204')
+    # ROBOT_1 = Robot(0, '192.168.1.208')
+    ROBOT_1 = Robot(0, '192.168.1.211')
+    # ROBOT_2 = Robot(1, '192.168.1.244')
+    # ROBOT_3 = Robot(2, '192.168.1.203')
+    # ROBOT_4 = Robot(3, '192.168.1.236')
+    # ROBOT_5 = Robot(4, '192.168.1.226')
+    # ROBOT_6 = Robot(5, '192.168.1.242')
+    # ROBOT_7 = Robot(6, '192.168.1.215')
+    # ROBOT_8 = Robot(7, '192.168.1.234')
+    # ROBOT_9 = Robot(8, '192.168.1.237')
+    # ROBOT_10 = Robot(9, '192.168.1.204')
 
-    robots = [ROBOT_1, ROBOT_2, ROBOT_3, ROBOT_4, ROBOT_5, ROBOT_6, ROBOT_7, ROBOT_8, ROBOT_9, ROBOT_10]
+    # robots = [ROBOT_1, ROBOT_2, ROBOT_3, ROBOT_4, ROBOT_5, ROBOT_6, ROBOT_7, ROBOT_8, ROBOT_9, ROBOT_10]
+    robots = [ROBOT_1]
 
-    ROBOT_1.set_neighbors([ROBOT_2, ROBOT_5])
-    ROBOT_2.set_neighbors([ROBOT_1, ROBOT_3, ROBOT_5, ROBOT_6, ROBOT_8])
-    ROBOT_3.set_neighbors([ROBOT_2, ROBOT_4, ROBOT_6, ROBOT_7, ROBOT_9])
-    ROBOT_4.set_neighbors([ROBOT_3, ROBOT_7])
-    ROBOT_5.set_neighbors([ROBOT_1, ROBOT_2, ROBOT_6, ROBOT_8])
-    ROBOT_6.set_neighbors([ROBOT_2, ROBOT_3, ROBOT_5, ROBOT_7, ROBOT_8, ROBOT_9])
-    ROBOT_7.set_neighbors([ROBOT_3, ROBOT_4, ROBOT_6, ROBOT_9])
-    ROBOT_8.set_neighbors([ROBOT_2, ROBOT_5, ROBOT_6, ROBOT_9, ROBOT_10])
-    ROBOT_9.set_neighbors([ROBOT_3, ROBOT_6, ROBOT_7, ROBOT_8, ROBOT_10])
-    ROBOT_10.set_neighbors([ROBOT_6, ROBOT_8, ROBOT_9])
+    # ROBOT_1.set_neighbors([ROBOT_2, ROBOT_5])
+    # ROBOT_2.set_neighbors([ROBOT_1, ROBOT_3, ROBOT_5, ROBOT_6, ROBOT_8])
+    # ROBOT_3.set_neighbors([ROBOT_2, ROBOT_4, ROBOT_6, ROBOT_7, ROBOT_9])
+    # ROBOT_4.set_neighbors([ROBOT_3, ROBOT_7])
+    # ROBOT_5.set_neighbors([ROBOT_1, ROBOT_2, ROBOT_6, ROBOT_8])
+    # ROBOT_6.set_neighbors([ROBOT_2, ROBOT_3, ROBOT_5, ROBOT_7, ROBOT_8, ROBOT_9])
+    # ROBOT_7.set_neighbors([ROBOT_3, ROBOT_4, ROBOT_6, ROBOT_9])
+    # ROBOT_8.set_neighbors([ROBOT_2, ROBOT_5, ROBOT_6, ROBOT_9, ROBOT_10])
+    # ROBOT_9.set_neighbors([ROBOT_3, ROBOT_6, ROBOT_7, ROBOT_8, ROBOT_10])
+    # ROBOT_10.set_neighbors([ROBOT_6, ROBOT_8, ROBOT_9])
 
     return robots
 
