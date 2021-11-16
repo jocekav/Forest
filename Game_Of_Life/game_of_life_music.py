@@ -186,8 +186,8 @@ class Game:
         self.dances = dances
         self.arms = arms
 
-        IP = "192.168.1.145"
-        # IP = "128.61.26.203"
+        # IP = "192.168.1.145"
+        IP = "128.61.25.148"
         PORT_TO_MAX = 7980
         self.client = udp_client.SimpleUDPClient(IP, PORT_TO_MAX)
 

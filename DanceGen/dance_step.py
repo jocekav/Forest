@@ -57,6 +57,8 @@ class Dance_Step:
             if isinstance(joints[i], (list, tuple, np.ndarray)):
                 if end_pos == 'init':
                     reset_pos = -1 * sum(joints[i])
+                elif end_pos == self.init_pos:
+                    reset_pos = -1 * sum(joints[i])
                 else:
                     reset_pos = end_pos[i] - sum(joints[i])
                 joints[i].append(reset_pos)
@@ -65,6 +67,8 @@ class Dance_Step:
                 temp = joints[i]
                 temp_t = joints_t[i]
                 if end_pos == 'init':
+                    joints[i] = [temp, -temp]
+                elif end_pos == self.init_pos:
                     joints[i] = [temp, -temp]
                 else:
                     joints[i] = [temp, end_pos[i]-temp]
@@ -171,8 +175,8 @@ def get_consecutive_trajectories(dance_steps, dance_dict):
         next_step = dance_dict[dance_steps[i+1]]
         curr_step.set_trajectory(next_step.init_pos)
         trajectories.append(curr_step.get_trajectory())
-    dance_dict[dance_steps[len(dance_steps)-1]].set_trajectory()
-    trajectories.append(curr_step.get_trajectory())
+    # dance_dict[dance_steps[len(dance_steps)-1]].set_trajectory()
+    # trajectories.append(curr_step.get_trajectory())
     return trajectories
 
 

@@ -109,4 +109,4 @@ def get_database():
 # ISO_LEFT.set_trajectory()
 
 database = get_database()
-print(dance_step.get_consecutive_trajectories(["ISO_LEFT", "ISO_LEFT", "ISO_RIGHT"], database)[0][0])
+dance_step.get_consecutive_trajectories(["ISO_LEFT", "ISO_LEFT"], database)

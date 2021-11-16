@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 49.0, 79.0, 921.0, 685.0 ],
+		"rect" : [ 34.0, 79.0, 1108.0, 685.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -7042,7 +7042,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 846.0, 181.0, 50.0, 22.0 ],
-					"text" : "0.25"
+					"text" : "0.75"
 				}
 
 			}
@@ -7054,7 +7054,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 819.0, 181.0, 50.0, 22.0 ],
-					"text" : "4"
+					"text" : "1"
 				}
 
 			}
@@ -7066,7 +7066,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 752.80000364780426, 181.0, 50.0, 22.0 ],
-					"text" : "0.25"
+					"text" : "0.75"
 				}
 
 			}
@@ -7078,7 +7078,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 730.0, 181.0, 50.0, 22.0 ],
-					"text" : "4"
+					"text" : "1"
 				}
 
 			}
@@ -7162,7 +7162,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 921.0, 251.0, 50.0, 22.0 ],
-					"text" : "0.5"
+					"text" : "0."
 				}
 
 			}
@@ -7174,7 +7174,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 899.0, 251.0, 50.0, 22.0 ],
-					"text" : "2"
+					"text" : "0"
 				}
 
 			}
@@ -7234,7 +7234,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 666.0, 251.0, 50.0, 22.0 ],
-					"text" : "0.5"
+					"text" : "0."
 				}
 
 			}
@@ -7246,7 +7246,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 634.80000364780426, 251.0, 50.0, 22.0 ],
-					"text" : "2"
+					"text" : "0"
 				}
 
 			}
@@ -7271,7 +7271,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 309.80000364780426, 110.0, 332.0, 35.0 ],
-					"text" : "arms 2. 0.5 1. 0.75 1. 0.75 2. 0.5 1. 0.75 2. 0.5 1. 0.75 4. 0.25 4. 0.25 1. 0.75"
+					"text" : "arms 0. 0. 1. 0.75 1. 0.75 0. 0. 1. 0.75 2. 0.5 1. 0.75 1. 0.75 1. 0.75 1. 0.75"
 				}
 
 			}
