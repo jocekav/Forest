@@ -20,6 +20,7 @@ import threading
 import socket
 import pickle
 import time
+import pythonosc
 from pythonosc import udp_client
 from random import randrange
 
@@ -78,11 +79,8 @@ class Robot:
         self.status = 'Inactive'
         self.inactive()
 
-    def set_first_birth(self):
-        self.status = 'First Birth'
-
     def is_alive(self):
-        if self.status == 'Alive' or self.status == 'Living' or self.status == 'First Birth':
+        if self.status == 'Alive' or self.status == 'Living':
             return True
         else:
             return False
@@ -329,8 +327,6 @@ class Game:
             curr_state = curr_state + robot.get_status() + ' '
         print(curr_state)
 
-
-
         for i in range(iterations):
             self.change_state(robots, sleep_time)
             curr_state = ''
@@ -341,12 +337,8 @@ class Game:
     def change_state_contagion(self, robots, sleep_time):
         birth = []
         birth_ids = []
-        first_birth = []
-        first_birth_ids = []
         kill = []
         kill_ids = []
-        first_kill = []
-        first_kill_ids = []
         living = []
         living_ids = []
         dying = []
@@ -380,7 +372,7 @@ class Game:
                     living.append(robot)
             elif curr_robot_inactive:
                 if live_neighbors >= half_neighbors or active_neighbors >= 1:
-                    first_birth.append(robot)
+                    birth.append(robot)
             else:
                 if live_neighbors >= half_neighbors:
                     birth.append(robot)
@@ -392,13 +384,6 @@ class Game:
             i.set_alive()
             robot_num = i.get_num()
             birth_ids.append(robot_num)
-            sound_states[robot_num * 2] = 1
-            sound_states[(robot_num * 2) + 1] = .75
-        for i in first_birth:
-            i.set_alive()
-            i.set_first_birth()
-            robot_num = i.get_num()
-            first_birth_ids.append(robot_num)
             sound_states[robot_num * 2] = 1
             sound_states[(robot_num * 2) + 1] = .75
         for i in kill:
@@ -423,12 +408,12 @@ class Game:
             self.revive(robots)
 
         call_sound(self.client, sound_states, sleep_time)
-        # call_dances(self.dances, self.arms, birth_ids, kill_ids, living_ids, dying_ids, first_birth_ids)
+        # call_dances(self.dances, self.arms, birth_ids, kill_ids, living_ids, dying_ids)
 
     def run_game_contagion(self, robots, first_robot, iterations, sleep_time):
         for robot in robots:
             robot.set_inactive()
-        robots[first_robot].set_first_birth()
+        robots[first_robot].set_alive()
 
         sound_states = np.zeros(20)
 
@@ -442,7 +427,6 @@ class Game:
 
         call_sound(self.client, sound_states, sleep_time)
         #alive_dance(first_robot, self.dances, self.arms)
-        first_birth_dance(first_robot, self.dances, self.arms)
 
         for robot in robots:
             robot.set_inactive()
@@ -457,7 +441,7 @@ class Game:
         sound_states[(first_robot * 2) + 1] = .75
 
         call_sound(self.client, sound_states, sleep_time)
-        living_dance(first_robot, self.dances, self.arms)
+        #living_dance(first_robot, self.dances, self.arms)
 
         # look at neighbors before waking up?
 
@@ -509,46 +493,38 @@ def call_dances(dances, arms, alive, dead, living, dying):
     t2 = threading.Thread(target=dead_dance, args=([dead], dances, arms))
     t3 = threading.Thread(target=living_dance, args=([living], dances, arms))
     t4 = threading.Thread(target=dying_dance, args=([dying], dances, arms))
-    t5 = threading.Thread(target=first_birth_dance, args=([dying], dances, arms))
 
     # start threads
     t1.start()
     t2.start()
     t3.start()
     t4.start()
-    t5.start()
 
     t1.join()
     t2.join()
     t3.join()
     t4.join()
-    t5.join()
 
 
 def alive_dance(robots, dances, arms):
-    play_dances_gameoflife.playDance(3, robots, dances, arms)
-    ### ADD PROPER DANCE NUMBER ONCE YOU RUN THE CSVS!!!!
-
-
-def dead_dance(robots, dances, arms):
     play_dances_gameoflife.playDance(4, robots, dances, arms)
     ### ADD PROPER DANCE NUMBER ONCE YOU RUN THE CSVS!!!!
 
 
+def dead_dance(robots, dances, arms):
+    play_dances_gameoflife.playDance(8, robots, dances, arms)
+    ### ADD PROPER DANCE NUMBER ONCE YOU RUN THE CSVS!!!!
+
+
 def living_dance(robots, dances, arms):
-    play_dances_gameoflife.playDance(0, robots, dances, arms)
+    play_dances_gameoflife.playDance(5, robots, dances, arms)
     ### ADD PROPER DANCE NUMBER ONCE YOU RUN THE CSVS!!!!
 
 
 def dying_dance(robots, dances, arms):
-    play_dances_gameoflife.playDance(5, robots, dances, arms)
+    play_dances_gameoflife.playDance(9, robots, dances, arms)
     ### ADD PROPER DANCE NUMBER ONCE YOU RUN THE CSVS!!!!
 
-def first_birth_dance(robots, dances, arms):
-    play_dances_gameoflife.playDance(1, robots, dances, arms)
-
-def first_death_dance(robots, dances, arms):
-    play_dances_gameoflife.playDance(2, robots, dances, arms)
 
 def init_robots():
     ROBOT_1 = Robot(0)
@@ -588,9 +564,9 @@ def init_and_run_contagion(dances, arms):
     robots = init_robots()
     game = Game(robots, dances, arms)
     # game.init_audio('Joy.wav', 'Sad.wav')
-    iterations = 3
+    iterations = 5
     first_robot = 0
-    game.run_game_contagion(robots, first_robot, iterations, 4)
+    game.run_game_contagion(robots, first_robot, iterations)
 
 
 def test_without_arms():
@@ -601,15 +577,15 @@ def test_without_arms():
     # game.init_audio('Joy.wav', 'Sadness.wav')
     #game.run_game(robots, 4)
     first_robot = randrange(10)
-    game.run_game_contagion(robots, 0, 6, 5)
-    # first_robot = randrange(10)
-    # game.run_game_contagion(robots, first_robot, 6, 3)
-    # first_robot = randrange(10)
-    # game.run_game_contagion(robots, first_robot, 6, 1)
+    game.run_game_contagion(robots, first_robot, 6, 5)
+    first_robot = randrange(10)
+    game.run_game_contagion(robots, first_robot, 6, 3)
+    first_robot = randrange(10)
+    game.run_game_contagion(robots, first_robot, 6, 1)
 
 
 
-# test_without_arms()
+test_without_arms()
 
 
 

@@ -80,23 +80,26 @@ if __name__ == "__main__":
 
     sys.path.append(os.path.join(os.path.dirname(__file__), '../../..'))
     from xarm.wrapper import XArmAPI
+    arm1 = XArmAPI('192.168.1.211')
+    # arm1 = XArmAPI('192.168.1.208')
+    # arm2 = XArmAPI('192.168.1.244')
+    # arm3 = XArmAPI('192.168.1.203')
+    # arm4 = XArmAPI('192.168.1.236')
+    # arm5 = XArmAPI('192.168.1.226')
+    # arm6 = XArmAPI('192.168.1.242')
+    # arm7 = XArmAPI('192.168.1.215')
+    # arm8 = XArmAPI('192.168.1.234')
+    # arm9 = XArmAPI('192.168.1.237')
+    # arm10 = XArmAPI('192.168.1.204')
 
-    arm1 = XArmAPI('192.168.1.208')
-    arm2 = XArmAPI('192.168.1.244')
-    arm3 = XArmAPI('192.168.1.203')
-    arm4 = XArmAPI('192.168.1.236')
-    arm5 = XArmAPI('192.168.1.226')
-    arm6 = XArmAPI('192.168.1.242')
-    arm7 = XArmAPI('192.168.1.215')
-    arm8 = XArmAPI('192.168.1.234')
-    arm9 = XArmAPI('192.168.1.237')
-    arm10 = XArmAPI('192.168.1.204')
 
+    # arms = [arm1, arm2, arm3, arm4, arm5, arm6, arm7, arm8, arm9, arm10]
+    arms = [arm1]
+    # totalArms = len(arms)
+    totalArms = 1
 
-    arms = [arm1, arm2, arm3, arm4, arm5, arm6, arm7, arm8, arm9, arm10]
-    totalArms = len(arms)
-
-    directory = '/home/forest/Desktop/xArm/contagion/'
+    # directory = '/home/forest/Desktop/xArm/game_of_life_csvs/'
+    directory = '/home/codmusic/Desktop/FOREST/game_of_life_csvs'
 
     dances = []
     trajectories = sorted(os.listdir(directory))
