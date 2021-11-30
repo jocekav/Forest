@@ -50,8 +50,77 @@ class Dance_Step:
         # joints = np.array([self.joint1[0], self.joint2[0], self.joint3[0], self.joint4[0], self.joint5[0], self.joint6[0], self.joint7[0]])
         # joints_t = np.array([self.joint1_t[0], self.joint2_t[0], self.joint3_t[0], self.joint4_t[0], self.joint5_t[0], self.joint6_t[0], self.joint7_t[0]])
 
+<<<<<<< Updated upstream
         joints = [self.joint1[0], self.joint2[0], self.joint3[0], self.joint4[0], self.joint5[0], self.joint6[0], self.joint7[0]]
         joints_t = [self.joint1_t[0], self.joint2_t[0], self.joint3_t[0], self.joint4_t[0], self.joint5_t[0], self.joint6_t[0], self.joint7_t[0]]
+=======
+        joints = [self.joint1[0], self.joint2[0], self.joint3[0], self.joint4[0], self.joint5[0], self.joint6[0],
+                  self.joint7[0]]
+        joints_t = [self.joint1_t[0], self.joint2_t[0], self.joint3_t[0], self.joint4_t[0], self.joint5_t[0],
+                    self.joint6_t[0], self.joint7_t[0]]
+        
+        for i in range(len(joints)):
+            if isinstance(joints[i], (list, tuple, np.ndarray)):
+                if end_pos == 'init':
+                    reset_pos = -1 * sum(joints[i])
+                else:
+                    reset_pos = end_pos[i] - sum(joints[i])
+                joints[i].append(reset_pos)
+                joints_t[i].append(final_time)
+            else:
+                temp = joints[i]
+                temp_t = joints_t[i]
+                if end_pos == 'init':
+                    joints[i] = [temp, -temp]
+                else:
+                    joints[i] = [temp, end_pos[i]-temp]
+                joints_t[i] = [temp_t, final_time]
+
+        # same_flag = True
+        # for i in range(len(joints)):
+        #     if isinstance(joints[i], (list, tuple, np.ndarray)):
+        #         if end_pos == 'init' or end_pos == self.init_pos:
+        #             reset_pos = -1 * sum(joints[i])
+        #             if reset_pos != self.init_pos[i]:
+        #                 same_flag = False
+        #                 break
+        #         else:
+        #             reset_pos = end_pos[i] - sum(joints[i])
+        #             if reset_pos != end_pos[i]:
+        #                 same_flag = False
+        #                 break
+        #     else:
+        #         temp = joints[i]
+        #         temp_t = joints_t[i]
+        #         if end_pos == 'init' or end_pos == self.init_pos:
+        #             if -temp != self.init_pos[i]:
+        #                 same_flag = False
+        #                 break
+        #         else:
+        #             if (end_pos[i] - temp) != end_pos[i]:
+        #                 same_flag = False
+        #                 break
+        # for i in range(len(joints)):
+        #     if isinstance(joints[i], (list, tuple, np.ndarray)):
+        #         if end_pos == 'init':
+        #             reset_pos = -1 * sum(joints[i])
+        #         elif end_pos == self.init_pos:
+        #             reset_pos = -1 * sum(joints[i])
+        #         else:
+        #             reset_pos = end_pos[i] - sum(joints[i])
+        #         joints[i].append(reset_pos)
+        #         joints_t[i].append(final_time)
+        #     else:
+        #         temp = joints[i]
+        #         temp_t = joints_t[i]
+        #         if end_pos == 'init':
+        #             joints[i] = [temp, -temp]
+        #         elif end_pos == self.init_pos:
+        #             joints[i] = [temp, -temp]
+        #         else:
+        #             joints[i] = [temp, end_pos[i] - temp]
+        #         joints_t[i] = [temp_t, final_time]
+>>>>>>> Stashed changes
 
         for i in range(len(joints)):
             if isinstance(joints[i], (list, tuple, np.ndarray)):
@@ -159,8 +228,13 @@ class Dance_Step:
         trajectory_arr = np.transpose(trajectory_arr)
         self.trajectory = trajectory_arr
         if csv:
+<<<<<<< Updated upstream
             np.savetxt(self.name + ".csv", trajectory_arr, delimiter =", ", fmt ='% s')     
         # return trajectory_arr
+=======
+            np.savetxt(self.name + "_return.csv", trajectory_arr, delimiter=", ", fmt='% s')
+            # return trajectory_arr
+>>>>>>> Stashed changes
 
     def get_trajectory(self):
         return self.trajectory

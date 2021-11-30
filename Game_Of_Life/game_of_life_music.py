@@ -14,6 +14,7 @@ import numpy as np
 # import trajectory_generation as traj
 import pandas as pd
 import csv
+from Game_Of_Life.play_dances_gameoflife import playDance
 
 import play_dances_gameoflife
 import threading
@@ -186,8 +187,13 @@ class Game:
         self.dances = dances
         self.arms = arms
 
+<<<<<<< Updated upstream
         # IP = "192.168.1.145"
         IP = "128.61.25.148"
+=======
+        # IP = "128.61.25.122"
+        IP = "192.168.1.145"
+>>>>>>> Stashed changes
         PORT_TO_MAX = 7980
         self.client = udp_client.SimpleUDPClient(IP, PORT_TO_MAX)
 
@@ -334,7 +340,7 @@ class Game:
                 curr_state = curr_state + robot.get_status() + ' '
             print(curr_state)
 
-    def change_state_contagion(self, robots, sleep_time):
+    def change_state_contagion(self, robots, sleep_time, final_flag):
         birth = []
         birth_ids = []
         kill = []
@@ -408,7 +414,11 @@ class Game:
             self.revive(robots)
 
         call_sound(self.client, sound_states, sleep_time)
+<<<<<<< Updated upstream
         # call_dances(self.dances, self.arms, birth_ids, kill_ids, living_ids, dying_ids)
+=======
+        call_dances(self.dances, self.arms, birth_ids, kill_ids, living_ids, dying_ids, first_birth_ids, final_flag)
+>>>>>>> Stashed changes
 
     def run_game_contagion(self, robots, first_robot, iterations, sleep_time):
         for robot in robots:
@@ -448,11 +458,18 @@ class Game:
         # robots[first_robot].get_neighbors()
 
         for i in range(iterations):
-            self.change_state_contagion(robots, sleep_time)
-            curr_state = ''
-            for robot in robots:
-                curr_state = curr_state + robot.get_status() + ' '
-            print(curr_state)
+            if i == (iterations - 1):
+                self.change_state_contagion(robots, sleep_time)
+                curr_state = 'FINAL: '
+                for robot in robots:
+                    curr_state = curr_state + robot.get_status() + ' '
+                print(curr_state)
+            else:
+                self.change_state_contagion(robots, sleep_time)
+                curr_state = ''
+                for robot in robots:
+                    curr_state = curr_state + robot.get_status() + ' '
+                print(curr_state)
 
 
     def print_dance(self, robots, final_time):
@@ -488,8 +505,8 @@ def call_sound(client, sound_states, sleep_time):
     client.send_message('arms', sound_states)
     time.sleep(sleep_time)
 
-def call_dances(dances, arms, alive, dead, living, dying):
-    t1 = threading.Thread(target=alive_dance, args=([alive], dances, arms))
+def call_dances(dances, arms, alive, dead, living, dying, final_flag):
+    t1 = threading.Thread(target=alive_dance, args=([alive], dances, arms, final_flag))
     t2 = threading.Thread(target=dead_dance, args=([dead], dances, arms))
     t3 = threading.Thread(target=living_dance, args=([living], dances, arms))
     t4 = threading.Thread(target=dying_dance, args=([dying], dances, arms))
@@ -506,6 +523,7 @@ def call_dances(dances, arms, alive, dead, living, dying):
     t4.join()
 
 
+<<<<<<< Updated upstream
 def alive_dance(robots, dances, arms):
     play_dances_gameoflife.playDance(4, robots, dances, arms)
     ### ADD PROPER DANCE NUMBER ONCE YOU RUN THE CSVS!!!!
@@ -525,6 +543,44 @@ def dying_dance(robots, dances, arms):
     play_dances_gameoflife.playDance(9, robots, dances, arms)
     ### ADD PROPER DANCE NUMBER ONCE YOU RUN THE CSVS!!!!
 
+=======
+def alive_dance(robots, dances, arms, final_flag):
+    if final_flag:
+        play_dances_gameoflife.playDance(3, robots, dances, arms)
+    else:
+        play_dances_gameoflife.playDance(3, robots, dances, arms)
+    ### ADD PROPER DANCE NUMBER ONCE YOU RUN THE CSVS!!!!
+
+
+def dead_dance(robots, dances, arms, final_flag):
+    if final_flag:
+        play_dances_gameoflife.playDance(4, robots, dances, arms)
+    else:
+        play_dances_gameoflife.playDance(4, robots, dances, arms)
+    ### ADD PROPER DANCE NUMBER ONCE YOU RUN THE CSVS!!!!
+
+
+def living_dance(robots, dances, arms, final_flag):
+    if final_flag:
+        play_dances_gameoflife.playDance(0, robots, dances, arms)
+    else:
+        play_dances_gameoflife.playDance(0, robots, dances, arms)
+    ### ADD PROPER DANCE NUMBER ONCE YOU RUN THE CSVS!!!!
+
+
+def dying_dance(robots, dances, arms, final_flag):
+    if final_flag:
+        play_dances_gameoflife.playDance(5, robots, dances, arms)
+    else:
+        play_dances_gameoflife.playDance(5, robots, dances, arms)
+    ### ADD PROPER DANCE NUMBER ONCE YOU RUN THE CSVS!!!!
+
+def first_birth_dance(robots, dances, arms, final_flag):
+    play_dances_gameoflife.playDance(1, robots, dances, arms)
+
+def first_death_dance(robots, dances, arms, final_flag):
+    play_dances_gameoflife.playDance(2, robots, dances)
+>>>>>>> Stashed changes
 
 def init_robots():
     ROBOT_1 = Robot(0)
@@ -566,7 +622,11 @@ def init_and_run_contagion(dances, arms):
     # game.init_audio('Joy.wav', 'Sad.wav')
     iterations = 5
     first_robot = 0
+<<<<<<< Updated upstream
     game.run_game_contagion(robots, first_robot, iterations)
+=======
+    game.run_game_contagion(robots, first_robot, iterations, 0)
+>>>>>>> Stashed changes
 
 
 def test_without_arms():

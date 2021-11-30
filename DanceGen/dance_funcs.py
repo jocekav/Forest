@@ -106,7 +106,17 @@ def get_database():
 
 # dances = get_database()
 # print(dances["ISO_LEFT"].get_trajectory()[0])
+<<<<<<< Updated upstream
 # ISO_LEFT.set_trajectory()
+=======
+ALIVE.set_trajectory(csv=True, end_pos=[0, 0, 0, 90, 0, 0, 0])
+DEAD.set_trajectory(csv=True, end_pos=[0, 0, 0, 90, 0, 0, 0])
+LIVING.set_trajectory(csv=True, end_pos=[0, 0, 0, 90, 0, 0, 0])
+DYING.set_trajectory(csv=True, end_pos=[0, 0, 0, 90, 0, 0, 0])
+ALIVE_2_DEAD.set_trajectory(csv=True, end_pos=[0, 0, 0, 90, 0, 0, 0])
+DEAD_2_ALIVE.set_trajectory(csv=True, end_pos=[0, 0, 0, 90, 0, 0, 0])
+
+>>>>>>> Stashed changes
 
 database = get_database()
 dance_step.get_consecutive_trajectories(["ISO_LEFT", "ISO_LEFT"], database)
