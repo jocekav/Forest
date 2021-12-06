@@ -16,6 +16,7 @@ import pandas as pd
 import csv
 
 import play_dances_gameoflife
+# from Game_Of_Life.play_dances_gameoflife import playDance
 import threading
 import socket
 import pickle
@@ -174,8 +175,6 @@ class Robot:
         self.dance_t.append(inactive_time)
 
 
-
-
 class Game:
 
     def __init__(self, robots, dances, arms):
@@ -188,8 +187,8 @@ class Game:
         self.dances = dances
         self.arms = arms
 
-        IP = "128.61.25.122"
-        # IP = "128.61.26.203"
+        # IP = "128.61.25.122"
+        IP = "128.61.27.43"
         PORT_TO_MAX = 7980
         self.client = udp_client.SimpleUDPClient(IP, PORT_TO_MAX)
 
@@ -338,7 +337,7 @@ class Game:
                 curr_state = curr_state + robot.get_status() + ' '
             print(curr_state)
 
-    def change_state_contagion(self, robots, sleep_time):
+    def change_state_contagion(self, robots, sleep_time, final_flag):
         birth = []
         birth_ids = []
         first_birth = []
@@ -423,7 +422,7 @@ class Game:
             self.revive(robots)
 
         call_sound(self.client, sound_states, sleep_time)
-        # call_dances(self.dances, self.arms, birth_ids, kill_ids, living_ids, dying_ids, first_birth_ids)
+        # call_dances(self.dances, self.arms, birth_ids, kill_ids, living_ids, dying_ids, first_birth_ids, final_flag)
 
     def run_game_contagion(self, robots, first_robot, iterations, sleep_time):
         for robot in robots:
@@ -462,13 +461,19 @@ class Game:
         # look at neighbors before waking up?
 
         # robots[first_robot].get_neighbors()
-
         for i in range(iterations):
-            self.change_state_contagion(robots, sleep_time)
-            curr_state = ''
-            for robot in robots:
-                curr_state = curr_state + robot.get_status() + ' '
-            print(curr_state)
+            if i == (iterations - 1):
+                self.change_state_contagion(robots, sleep_time, True)
+                curr_state = 'FINAL: '
+                for robot in robots:
+                    curr_state = curr_state + robot.get_status() + ' '
+                print(curr_state)
+            else:
+                self.change_state_contagion(robots, sleep_time, False)
+                curr_state = ''
+                for robot in robots:
+                    curr_state = curr_state + robot.get_status() + ' '
+                print(curr_state)
 
 
     def print_dance(self, robots, final_time):
