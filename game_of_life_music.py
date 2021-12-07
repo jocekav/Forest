@@ -201,12 +201,39 @@ class Game:
         return self.dances, self.arms
 
     def revive(self, robots):
+        print("revive")
+        birth = []
+        birth_ids = []
+        first_birth = []
+        first_birth_ids = []
+        kill = []
+        kill_ids = []
+        first_kill = []
+        first_kill_ids = []
+        living = []
+        living_ids = []
+        dying = []
+        dying_ids = []
+        death_count = 0
+
+        sound_states = np.zeros(20)
         for robot in robots:
             random = randint(0, 2)
             if random == 1:
                 robot.set_alive()
+                robot_num = robot.get_num()
+                birth_ids.append(robot_num)
+                sound_states[robot_num * 2] = 1
+                sound_states[(robot_num * 2) + 1] = .75
             else:
-                robot.set_die()
+                robot.set_dying()
+                robot_num = robot.get_num()
+                dying_ids.append(robot_num)
+                sound_states[robot_num * 2] = 4
+                sound_states[(robot_num * 2) + 1] = .25
+
+        call_sound(self.client, sound_states, 0)
+        call_dances(self.dances, self.arms, birth_ids, kill_ids, living_ids, dying_ids, first_birth_ids)
 
     def change_state(self, robots, sleep_time):
         birth = []
@@ -421,6 +448,7 @@ class Game:
             sound_states[(robot_num * 2) + 1] = .25
         if death_count == 9:
             self.revive(robots)
+            return
 
         call_sound(self.client, sound_states, sleep_time)
         call_dances(self.dances, self.arms, birth_ids, kill_ids, living_ids, dying_ids, first_birth_ids)
@@ -587,12 +615,11 @@ def init_and_run(dances, arms):
     iterations = 2
     game.run_game(robots, iterations)
 
-def init_and_run_contagion(dances, arms):
+def init_and_run_contagion(dances, arms, first_robot):
     robots = init_robots()
     game = Game(robots, dances, arms)
     # game.init_audio('Joy.wav', 'Sad.wav')
-    iterations = 6
-    first_robot = 0
+    iterations = 10
     game.run_game_contagion(robots, first_robot, iterations, 0)
 
 
