@@ -11,9 +11,13 @@
 ,
 		"classnamespace" : "box",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 		"rect" : [ 34.0, 79.0, 1108.0, 685.0 ],
 =======
 		"rect" : [ 55.0, 79.0, 921.0, 685.0 ],
+>>>>>>> Stashed changes
+=======
+		"rect" : [ 34.0, 79.0, 921.0, 685.0 ],
 >>>>>>> Stashed changes
 		"bglocked" : 0,
 		"openinpresentation" : 0,
@@ -7022,7 +7026,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 806.0, 151.0, 50.0, 22.0 ],
-					"text" : "0.75"
+					"text" : "0.5"
 				}
 
 			}
@@ -7034,7 +7038,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 781.0, 151.0, 50.0, 22.0 ],
-					"text" : "1"
+					"text" : "2"
 				}
 
 			}
@@ -7094,7 +7098,11 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 885.0, 218.0, 50.0, 22.0 ],
+<<<<<<< Updated upstream
 					"text" : "0.75"
+=======
+					"text" : "0.5"
+>>>>>>> Stashed changes
 				}
 
 			}
@@ -7106,7 +7114,11 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 861.0, 218.0, 50.0, 22.0 ],
+<<<<<<< Updated upstream
 					"text" : "1"
+=======
+					"text" : "2"
+>>>>>>> Stashed changes
 				}
 
 			}
@@ -7119,7 +7131,11 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 790.0, 218.0, 50.0, 22.0 ],
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 					"text" : "0.5"
+=======
+					"text" : "0.75"
+>>>>>>> Stashed changes
 =======
 					"text" : "0.75"
 >>>>>>> Stashed changes
@@ -7135,7 +7151,11 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 768.600001513957977, 218.0, 50.0, 22.0 ],
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 					"text" : "2"
+=======
+					"text" : "1"
+>>>>>>> Stashed changes
 =======
 					"text" : "1"
 >>>>>>> Stashed changes
@@ -7151,9 +7171,13 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 697.0, 218.0, 50.0, 22.0 ],
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 					"text" : "0.75"
 =======
 					"text" : "0."
+>>>>>>> Stashed changes
+=======
+					"text" : "0.5"
 >>>>>>> Stashed changes
 				}
 
@@ -7167,9 +7191,13 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 677.0, 218.0, 50.0, 22.0 ],
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 					"text" : "1"
 =======
 					"text" : "0"
+>>>>>>> Stashed changes
+=======
+					"text" : "2"
 >>>>>>> Stashed changes
 				}
 
@@ -7230,7 +7258,11 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 752.80000364780426, 251.0, 50.0, 22.0 ],
+<<<<<<< Updated upstream
 					"text" : "0."
+=======
+					"text" : "0.5"
+>>>>>>> Stashed changes
 				}
 
 			}
@@ -7242,7 +7274,11 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 730.0, 251.0, 50.0, 22.0 ],
+<<<<<<< Updated upstream
 					"text" : "0"
+=======
+					"text" : "2"
+>>>>>>> Stashed changes
 				}
 
 			}
@@ -7254,7 +7290,11 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 666.0, 251.0, 50.0, 22.0 ],
+<<<<<<< Updated upstream
 					"text" : "0."
+=======
+					"text" : "0.75"
+>>>>>>> Stashed changes
 				}
 
 			}
@@ -7266,7 +7306,11 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 634.80000364780426, 251.0, 50.0, 22.0 ],
+<<<<<<< Updated upstream
 					"text" : "0"
+=======
+					"text" : "1"
+>>>>>>> Stashed changes
 				}
 
 			}
@@ -7292,7 +7336,11 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 309.80000364780426, 110.0, 332.0, 35.0 ],
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 					"text" : "arms 0. 0. 1. 0.75 1. 0.75 0. 0. 1. 0.75 2. 0.5 1. 0.75 1. 0.75 1. 0.75 1. 0.75"
+=======
+					"text" : "arms 1. 0.75 2. 0.5 2. 0.5 1. 0.75 2. 0.5 1. 0.75 2. 0.5 2. 0.5 2. 0.5 2. 0.5"
+>>>>>>> Stashed changes
 				}
 
 			}
