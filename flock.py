@@ -124,7 +124,8 @@ class Robot:
         if joint_num == 7:
             return [self.joint_7, self.joint_7_moves]
 
-    def flock(self, joint_nums=[1, 2, 3, 4, 5, 6, 7], weight=0.5):
+
+    def flock(self, joint_nums=[1, 2, 3, 4, 5, 6, 7], align_weight=0.5, target=False, target_weight=False):
         for i in range(1, (len(joint_nums) + 1)):
             align = self.align(i)
             # new_angle = (align + self.joint_5) / 2
@@ -132,9 +133,14 @@ class Robot:
 
             [joint, joint_moves] = self.choose_joint(i)
 
-            new_angle = ((align * weight) + (joint * (1 - weight))) / 2
-            joint_moves.append(new_angle)
-            joint = new_angle
+            if target:
+                new_angle = ((align * align_weight) + (joint * (1 - align_weight + target_weight)) + (target * target_weight)) / 3
+                joint_moves.append(new_angle)
+                joint = new_angle
+            else:
+                new_angle = ((align * align_weight) + (joint * (1 - align_weight))) / 2
+                joint_moves.append(new_angle)
+                joint = new_angle
             # return new_angle
             # coh = self.cohesion()
 
@@ -154,16 +160,17 @@ class Robot:
         # for i in range(len(self.joint_5_moves)-1):
         #     new_step = [0, 0, 0, 0, (self.joint_5_moves[i+1] - self.joint_5_moves[i]), 0, 0]
         for i in range(len(self.joint_1_moves)-1):
-            new_step = [self.joint_1_moves[i+1] - self.joint_1_moves[i+1], 
-                        self.joint_2_moves[i+1] - self.joint_2_moves[i+1],  
-                        self.joint_3_moves[i+1] - self.joint_3_moves[i+1],
-                        self.joint_4_moves[i+1] - self.joint_4_moves[i+1],
-                        self.joint_5_moves[i+1] - self.joint_5_moves[i+1],
-                        self.joint_6_moves[i+1] - self.joint_6_moves[i+1],
-                        self.joint_7_moves[i+1] - self.joint_7_moves[i+1]]
+            new_step = [self.joint_1_moves[i+1] - self.joint_1_moves[i], 
+                        self.joint_2_moves[i+1] - self.joint_2_moves[i],  
+                        self.joint_3_moves[i+1] - self.joint_3_moves[i],
+                        self.joint_4_moves[i+1] - self.joint_4_moves[i],
+                        self.joint_5_moves[i+1] - self.joint_5_moves[i],
+                        self.joint_6_moves[i+1] - self.joint_6_moves[i],
+                        self.joint_7_moves[i+1] - self.joint_7_moves[i]]
             self.dance.append(new_step)
             new_time = [5, 5, 5, 5, 5, 5, 5]
             self.dance_t.append(new_time)
+
 
 
 class Flock:
