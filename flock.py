@@ -1,10 +1,9 @@
-from ast import Num
 from random import randint
 import numpy as np
 import math
 import pandas as pd
-import matplotlib
-import matplotlib.pyplot as plt
+# import matplotlib
+# import matplotlib.pyplot as plt
 
 import trajectory_generation as traj
 
@@ -14,10 +13,22 @@ class Robot:
         self.num = num
         self.dance = []
         self.dance_t = []
-        self.joint_0 = randint(0, 360)
+        self.joint_1 = 0
+        self.joint_2 = 0
+        self.joint_3 = randint(0, 355)
+        self.joint_4 = 0
+        self.joint_5 = randint(0, 355)
+        self.joint_6 = 0
+        self.joint_7 = 0
         self.x_pos = x_pos
         self.y_pos = y_pos
-        self.joint_0_moves = [self.joint_0]
+        self.joint_1_moves = [self.joint_1]
+        self.joint_2_moves = [self.joint_2]
+        self.joint_3_moves = [self.joint_3]
+        self.joint_4_moves = [self.joint_4]
+        self.joint_5_moves = [self.joint_5]
+        self.joint_6_moves = [self.joint_6]
+        self.joint_7_moves = [self.joint_7]
 
     def set_neighbors(self, neighbors):
         self.neighbors = neighbors
@@ -28,11 +39,32 @@ class Robot:
     def get_num(self):
         return self.num
 
-    def get_joint_0(self):
-        return self.joint_0
+    def get_joint_1(self):
+        return self.joint_1
+
+    def get_joint_2(self):
+        return self.joint_2
+
+    def get_joint_3(self):
+        return self.joint_3
     
-    def get_joint_0_moves(self):
-        return self.joint_0_moves
+    def get_joint_4(self):
+        return self.joint_4
+
+    def get_joint_4(self):
+        return self.joint_4
+    
+    def get_joint_5(self):
+        return self.joint_5
+
+    def get_joint_6(self):
+        return self.joint_6
+
+    def get_joint_7(self):
+        return self.joint_7
+
+    def get_joints(self):
+        return [self.joint_1, self.joint_2, self.joint_3, self.joint_4, self.joint_5, self.joint_6, self.joint_7]
 
     # calculates a steering force toward a target
     def steer(self, target_x, target_y):
@@ -50,16 +82,16 @@ class Robot:
         # print(direction)
         return direction
 
-    # for all neighbors calculate the average joint_0 angle
-    def align(self):
+    # for all neighbors calculate the average joint_5 angle
+    def align(self, joint_num):
         sum = 0
         num_neighbors = 0
         for neighbor in self.neighbors:
-            sum += neighbor.joint_0
+            sum += neighbor.choose_joint(joint_num)[0]
             num_neighbors += 1
 
         sum = sum / num_neighbors
-        # steer = sum - self.joint_0
+        # steer = sum - self.joint_5
         steer = sum
         return steer
 
@@ -76,26 +108,59 @@ class Robot:
         y_sum = y_sum / num_neighbors
         return self.steer(x_sum, y_sum)
 
-    def flock(self):
-        align = self.align()
-        # new_angle = (align + self.joint_0) / 2
-        new_angle = ((align * 0.5) + self.joint_0) / 2
-        self.joint_0_moves.append(self.joint_0 - new_angle)
-        self.joint_0 = new_angle
-        return new_angle
-        coh = self.cohesion()
+    def choose_joint(self, joint_num):
+        if joint_num == 1:
+            return [self.joint_1, self.joint_1_moves]
+        if joint_num == 2:
+            return [self.joint_2, self.joint_2_moves]
+        if joint_num == 3:
+            return [self.joint_3, self.joint_3_moves]
+        if joint_num == 4:
+            return [self.joint_4, self.joint_4_moves]
+        if joint_num == 5:
+            return [self.joint_5, self.joint_5_moves]
+        if joint_num == 6:
+            return [self.joint_6, self.joint_6_moves]
+        if joint_num == 7:
+            return [self.joint_7, self.joint_7_moves]
 
-        # apply weights
-        align = align * 1.2
-        coh = coh * .8
+    def flock(self, joint_nums=[1, 2, 3, 4, 5, 6, 7], weight=0.5):
+        for i in range(1, (len(joint_nums) + 1)):
+            align = self.align(i)
+            # new_angle = (align + self.joint_5) / 2
+            # new_angle = ((align * 0.5) - self.joint_5) / 2
 
-        # find average angle to move
-        new_angle = (align + coh) / 2
-        return new_angle
+            [joint, joint_moves] = self.choose_joint(i)
+
+            new_angle = ((align * weight) + (joint * (1 - weight))) / 2
+            joint_moves.append(new_angle)
+            joint = new_angle
+            # return new_angle
+            # coh = self.cohesion()
+
+            # # apply weights
+            # align = align * 1.2
+            # coh = coh * .8
+
+            # # find average angle to move
+            # new_angle = (align + coh) / 2
+            # return new_angle
 
     def define_dance(self):
-        for i in range(len(self.joint_0_moves)):
-            new_step = [0, 0, 0, 0, self.joint_0_moves[i], 0, 0]
+        new_step = [self.joint_1_moves[0], self.joint_2_moves[0], self.joint_3_moves[0], self.joint_4_moves[0], self.joint_5_moves[0], self.joint_6_moves[0], self.joint_7_moves[0]]
+        self.dance.append(new_step)
+        new_time = [5, 5, 5, 5, 5, 5, 5]
+        self.dance_t.append(new_time)
+        # for i in range(len(self.joint_5_moves)-1):
+        #     new_step = [0, 0, 0, 0, (self.joint_5_moves[i+1] - self.joint_5_moves[i]), 0, 0]
+        for i in range(len(self.joint_1_moves)-1):
+            new_step = [self.joint_1_moves[i+1] - self.joint_1_moves[i+1], 
+                        self.joint_2_moves[i+1] - self.joint_2_moves[i+1],  
+                        self.joint_3_moves[i+1] - self.joint_3_moves[i+1],
+                        self.joint_4_moves[i+1] - self.joint_4_moves[i+1],
+                        self.joint_5_moves[i+1] - self.joint_5_moves[i+1],
+                        self.joint_6_moves[i+1] - self.joint_6_moves[i+1],
+                        self.joint_7_moves[i+1] - self.joint_7_moves[i+1]]
             self.dance.append(new_step)
             new_time = [5, 5, 5, 5, 5, 5, 5]
             self.dance_t.append(new_time)
@@ -109,8 +174,7 @@ class Flock:
     def run(self):
         for i in range(10):
             for robot in self.robots:
-                print('Robot: ' + str(robot.get_num()) +
-                      ' Angle: ' + str(robot.flock()))
+                robot.flock()
 
 
 def init_robots():
@@ -162,7 +226,7 @@ def init_robots():
     return robots
 
 def print_dance(robots, final_time):
-        NUM_ROBOTS = 8
+        NUM_ROBOTS = 9
         INIT_POS = [0, 0, 0, 90, 0, 0, 0]
         dances = []
         dances_t = []
@@ -184,22 +248,23 @@ def print_dance(robots, final_time):
 
         df = pd.DataFrame(final_position).astype(float)
         # df.to_csv("/home/forest/Desktop/xArm/Trajectories2/000027gameoflife.csv", header=False, index=False)
-        df.to_csv("flock.csv", header=False, index=False)
-
-        final_trajectory = velocity
-        final_trajectory = np.transpose(final_trajectory)
-
-        for robot in robots:
-            robot_pos = robot.get_num() * 7
-            robot_vel = []
-            for i in range(7):
+        # df.to_csv("/home/codmusic/Desktop/FOREST/Jocelyn_Scripts/flock.csv", header=False, index=False)
+        df.to_csv("/Users/jocekav/Documents/GitHub/Forest/flock.csv", header=False, index=False)
+        #
+        # final_trajectory = velocity
+        # final_trajectory = np.transpose(final_trajectory)
+        #
+        # for robot in robots:
+        #     robot_pos = robot.get_num() * 7
+        #     robot_vel = []
+        #     for i in range(7):
                 # print(len(final_trajectory[(i+robot_pos), :]))
                 # print(np.max(final_trajectory[(i+robot_pos), :]))
-                plt.plot(final_trajectory[:, (i+robot_pos)])
-            plt.show()
+            #     plt.plot(final_trajectory[:, (i+robot_pos)])
+            # plt.show()
 
         
-        pd.DataFrame(final_trajectory).to_csv("flock_vel.csv", header=False, index=False)
+        # pd.DataFrame(final_trajectory).to_csv("flock_vel.csv", header=False, index=False)
 
         
 
@@ -207,12 +272,12 @@ def main():
     robots = init_robots()
     for robot in robots:
         print('Robot: ' + str(robot.get_num()) +
-                ' Angle: ' + str(robot.get_joint_0()))
+                ' Angle: ' + str(robot.get_joints()))
     flock = Flock(robots)
     flock.run()
     for robot in robots:
         print('Robot: ' + str(robot.get_num()) +
-                ' Angle: ' + str(robot.get_joint_0_moves()))
+                ' Angle: ' + str(robot.get_joints()))
         robot.define_dance()
     print_dance(robots, 5)
     

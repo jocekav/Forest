@@ -5,7 +5,7 @@ import collections
 INIT_POS = np.zeros(7)
 MAX_VEl = np.zeros(7) + 180
 MAX_ACC = np.zeros(7) + 1000
-NUM_ROBOTS = 8
+NUM_ROBOTS = 9
 NUM_JOINTS = 7
 
 BPM = 50
