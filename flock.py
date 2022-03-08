@@ -2,6 +2,7 @@ from random import randint
 import numpy as np
 import math
 import pandas as pd
+import pid
 # import matplotlib
 # import matplotlib.pyplot as plt
 
@@ -14,12 +15,19 @@ class Robot:
         self.dance = []
         self.dance_t = []
         self.joint_1 = 0
+        self.joint_1_PID = None
         self.joint_2 = 0
+        self.joint_2_PID = None
         self.joint_3 = randint(0, 355)
+        self.joint_3_PID = None
         self.joint_4 = 0
+        self.joint_4_PID = None
         self.joint_5 = randint(0, 355)
+        self.joint_5_PID = None
         self.joint_6 = 0
+        self.joint_6_PID = None
         self.joint_7 = 0
+        self.joint_7_PID = None
         self.x_pos = x_pos
         self.y_pos = y_pos
         self.joint_1_moves = [self.joint_1]
@@ -124,23 +132,71 @@ class Robot:
         if joint_num == 7:
             return [self.joint_7, self.joint_7_moves]
 
+    def get_joint_PID(self, joint_num):
+        if joint_num == 1:
+            return [self.joint_1_PID]
+        if joint_num == 2:
+            return [self.joint_2_PID]
+        if joint_num == 3:
+            return [self.joint_3_PID]
+        if joint_num == 4:
+            return [self.joint_4_PID]
+        if joint_num == 5:
+            return [self.joint_5_PID]
+        if joint_num == 6:
+            return [self.joint_6_PID]
+        if joint_num == 7:
+            return [self.joint_7_PID]
+   
+    def init_PID(self, joint_nums=[1, 2, 3, 4, 5, 6, 7]):
+        target_val = self.joint_1
+        self.joint_1_PID = pid.PID(5, 0.01, 0.1, setpoint=target_val)
+        self.joint_1_PID.output_limits = (0, 360)
 
-    def flock(self, joint_nums=[1, 2, 3, 4, 5, 6, 7], align_weight=0.5, target=False, target_weight=False):
+        target_val = self.joint_2
+        self.joint_2_PID = pid.PID(5, 0.01, 0.1, setpoint=target_val)
+        self.joint_2_PID.output_limits = (0, 360)
+
+        target_val = self.joint_3
+        self.joint_3_PID = pid.PID(5, 0.01, 0.1, setpoint=target_val)
+        self.joint_3_PID.output_limits = (0, 360)
+
+        target_val = self.joint_4
+        self.joint_4_PID = pid.PID(5, 0.01, 0.1, setpoint=target_val)
+        self.joint_4_PID.output_limits = (0, 360)
+
+        target_val = self.joint_5
+        self.joint_5_PID = pid.PID(5, 0.01, 0.1, setpoint=target_val)
+        self.joint_5_PID.output_limits = (0, 360)
+
+        target_val = self.joint_6
+        self.joint_6_PID = pid.PID(5, 0.01, 0.1, setpoint=target_val)
+        self.joint_6_PID.output_limits = (0, 360)
+
+        target_val = self.joint_7
+        self.joint_7_PID = pid.PID(5, 0.01, 0.1, setpoint=target_val)
+        self.joint_7_PID.output_limits = (0, 360)
+
+    
+    def call_PID(self, input_angle, joint_num):
+        curr_PID = self.get_joint_PID(joint_num)
+        return curr_PID[0](input_angle)
+
+    def flock(self, joint_nums=[1, 2, 3, 4, 5, 6, 7], align_weight=0.5, target=False, target_weight=False, use_PID=False):
         for i in range(1, (len(joint_nums) + 1)):
-            align = self.align(i)
-            # new_angle = (align + self.joint_5) / 2
-            # new_angle = ((align * 0.5) - self.joint_5) / 2
-
             [joint, joint_moves] = self.choose_joint(i)
+            align = self.align(i)
 
             if target:
                 new_angle = ((align * align_weight) + (joint * (1 - align_weight + target_weight)) + (target * target_weight)) / 3
-                joint_moves.append(new_angle)
-                joint = new_angle
             else:
                 new_angle = ((align * align_weight) + (joint * (1 - align_weight))) / 2
-                joint_moves.append(new_angle)
-                joint = new_angle
+
+            if use_PID:
+                new_angle = self.call_PID(new_angle, i)
+
+            joint_moves.append(new_angle)
+            joint = new_angle
             # return new_angle
             # coh = self.cohesion()
 
@@ -177,11 +233,13 @@ class Flock:
 
     def __init__(self, robots):
         self.robots = robots
+        for robot in self.robots:
+            robot.init_PID()
 
     def run(self):
         for i in range(10):
             for robot in self.robots:
-                robot.flock()
+                robot.flock(use_PID=True)
 
 
 def init_robots():
