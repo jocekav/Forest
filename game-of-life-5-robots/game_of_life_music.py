@@ -81,6 +81,9 @@ class Robot:
     def set_first_birth(self):
         self.status = 'First Birth'
 
+    def set_first_death(self):
+        self.status = 'First Death'
+
     def is_alive(self):
         if self.status == 'Alive' or self.status == 'Living' or self.status == 'First Birth':
             return True
@@ -237,7 +240,7 @@ class Game:
         # call_sound(self.client, sound_states, 0)
         # call_dances(self.dances, self.arms, self.play_state, birth_ids, kill_ids, living_ids, dying_ids, first_birth_ids)
 
-    def change_state(self, robots, sleep_time):
+    def change_state(self, robots):
         birth = []
         birth_ids = []
         kill = []
@@ -346,22 +349,38 @@ class Game:
 
 
     def run_game(self, robots, iterations, sleep_time):
+        birth = []
+        death = []
         for robot in robots:
             random = randint(0, 2)
             if random == 1:
-                robot.set_alive(True)
+                robot.set_first_birth()
+                birth.append(robot)
             else:
-                robot.set_die(True)
+                robot.set_first_death()
+                death.append(robot)
+
+        sound_states = np.zeros(20)
 
         curr_state = ''
         for robot in robots:
             curr_state = curr_state + robot.get_status() + ' '
         print(curr_state)
 
+        for robot in birth:
+            sound_states[robot.get_num() * 2] = 1
+            sound_states[(robot.get_num() * 2) + 1] = .75
+        for robot in death:
+            sound_states[robot.get_num() * 2] = 2
+            sound_states[(robot.get_num() * 2) + 1] = .5
 
+        # call_sound(self.client, sound_states, sleep_time)
+        # #alive_dance(first_robot, self.dances, self.arms)
+        # first_birth_dance(birth, self.dances, self.arms, self.play_state)
+        # first_death_dance(death, self.dances, self.arms, self.play_state)
 
         for i in range(iterations):
-            self.change_state(robots, sleep_time)
+            self.change_state(robots)
             curr_state = ''
             for robot in robots:
                 curr_state = curr_state + robot.get_status() + ' '
@@ -648,9 +667,9 @@ def test_without_arms():
     game = Game(robots, [], [], 'a')
     # iterations = 10
     # game.init_audio('Joy.wav', 'Sadness.wav')
-    #game.run_game(robots, 4)
+    game.run_game(robots, 4, 1)
     first_robot = randrange(10)
-    game.run_game_contagion(robots, [0, 1, 3, 4], 20, 1)
+    # game.run_game_contagion(robots, [0, 1, 3, 4], 20, 1)
     # first_robot = randrange(10)
     # game.run_game_contagion(robots, first_robot, 6, 3)
     # first_robot = randrange(10)
