@@ -20,7 +20,7 @@ import threading
 import socket
 import pickle
 import time
-from pythonosc import udp_client
+# from pythonosc import udp_client
 from random import randrange
 
 
@@ -193,7 +193,7 @@ class Game:
         # IP = "192.168.1.73"
         # IP = "128.6.27.43"
         PORT_TO_MAX = 7980
-        self.client = udp_client.SimpleUDPClient(IP, PORT_TO_MAX)
+        # self.client = udp_client.SimpleUDPClient(IP, PORT_TO_MAX)
 
     def set_dances_arms(self, dances, arms):
         self.dances = dances
@@ -234,8 +234,8 @@ class Game:
                 sound_states[robot_num * 2] = 4
                 sound_states[(robot_num * 2) + 1] = .25
 
-        call_sound(self.client, sound_states, 0)
-        call_dances(self.dances, self.arms, self.play_state, birth_ids, kill_ids, living_ids, dying_ids, first_birth_ids)
+        # call_sound(self.client, sound_states, 0)
+        # call_dances(self.dances, self.arms, self.play_state, birth_ids, kill_ids, living_ids, dying_ids, first_birth_ids)
 
     def change_state(self, robots, sleep_time):
         birth = []
@@ -341,8 +341,8 @@ class Game:
                     sound_states[num * 2] = 4
                 
 
-        call_sound(self.client, sound_states, sleep_time)
-        call_dances(self.dances, self.arms, birth_ids, kill_ids, living_ids, dying_ids)
+        # call_sound(self.client, sound_states, sleep_time)
+        # call_dances(self.dances, self.arms, birth_ids, kill_ids, living_ids, dying_ids)
 
 
     def run_game(self, robots, iterations, sleep_time):
@@ -452,13 +452,14 @@ class Game:
             self.revive(robots)
             return
 
-        call_sound(self.client, sound_states, sleep_time)
-        call_dances(self.dances, self.arms, self.play_state, birth_ids, kill_ids, living_ids, dying_ids, first_birth_ids)
+        # call_sound(self.client, sound_states, sleep_time)
+        # call_dances(self.dances, self.arms, self.play_state, birth_ids, kill_ids, living_ids, dying_ids, first_birth_ids)
 
     def run_game_contagion(self, robots, first_robot, iterations, sleep_time):
         for robot in robots:
             robot.set_inactive()
-        robots[first_robot].set_first_birth()
+        for robot in first_robot:
+            robots[robot].set_first_birth()
 
         sound_states = np.zeros(20)
 
@@ -467,27 +468,30 @@ class Game:
             curr_state = curr_state + robot.get_status() + ' '
         print(curr_state)
 
-        sound_states[first_robot * 2] = 1
-        sound_states[(first_robot * 2) + 1] = .75
+        for robot in first_robot:
+            sound_states[robot * 2] = 1
+            sound_states[(robot * 2) + 1] = .75
 
-        call_sound(self.client, sound_states, sleep_time)
-        #alive_dance(first_robot, self.dances, self.arms)
-        first_birth_dance(first_robot, self.dances, self.arms, self.play_state)
+        # call_sound(self.client, sound_states, sleep_time)
+        # #alive_dance(first_robot, self.dances, self.arms)
+        # first_birth_dance(first_robot, self.dances, self.arms, self.play_state)
 
         for robot in robots:
             robot.set_inactive()
-        robots[first_robot].set_living()
+        for robot in first_robot:
+            robots[robot].set_living()
 
         curr_state = ''
         for robot in robots:
             curr_state = curr_state + robot.get_status() + ' '
         print(curr_state)
 
-        sound_states[first_robot * 2] = 3
-        sound_states[(first_robot * 2) + 1] = .75
+        for robot in first_robot:
+            sound_states[robot * 2] = 3
+            sound_states[(robot * 2) + 1] = .75
 
-        call_sound(self.client, sound_states, sleep_time)
-        living_dance(first_robot, self.dances, self.arms, self.play_state)
+        # call_sound(self.client, sound_states, sleep_time)
+        # living_dance(first_robot, self.dances, self.arms, self.play_state)
 
         # look at neighbors before waking up?
 
@@ -581,32 +585,44 @@ def first_death_dance(robots, dances, arms, play_state):
     play_dances_gameoflife.playDance(2, robots, dances, arms, play_state)
 
 def init_robots():
+    # ROBOT_1 = Robot(0)
+    # # ROBOT_2 = Robot(1)
+    # ROBOT_3 = Robot(2)
+    # # ROBOT_4 = Robot(3)
+    # ROBOT_5 = Robot(4)
+    # # ROBOT_6 = Robot(5)
+    # ROBOT_7 = Robot(6)
+    # # ROBOT_8 = Robot(7)
+    # ROBOT_9 = Robot(8)
+    # # ROBOT_10 = Robot(9)
     ROBOT_1 = Robot(0)
-    ROBOT_2 = Robot(1)
     ROBOT_3 = Robot(2)
-    ROBOT_4 = Robot(3)
     ROBOT_5 = Robot(4)
-    ROBOT_6 = Robot(5)
     ROBOT_7 = Robot(6)
-    ROBOT_8 = Robot(7)
     ROBOT_9 = Robot(8)
-    # ROBOT_10 = Robot(9)
 
     # robots = [ROBOT_1, ROBOT_2, ROBOT_3, ROBOT_4, ROBOT_5, ROBOT_6, ROBOT_7, ROBOT_8, ROBOT_9, ROBOT_10]
-    robots = [ROBOT_1, ROBOT_2, ROBOT_3, ROBOT_4, ROBOT_5, ROBOT_6, ROBOT_7, ROBOT_8, ROBOT_9]
+    # robots = [ROBOT_1, ROBOT_2, ROBOT_3, ROBOT_4, ROBOT_5, ROBOT_6, ROBOT_7, ROBOT_8, ROBOT_9]
+    robots = [ROBOT_1, ROBOT_3, ROBOT_5, ROBOT_7, ROBOT_9]
 
-    ROBOT_1.set_neighbors([ROBOT_2, ROBOT_5])
-    ROBOT_2.set_neighbors([ROBOT_1, ROBOT_3, ROBOT_5, ROBOT_6, ROBOT_8])
-    ROBOT_3.set_neighbors([ROBOT_2, ROBOT_4, ROBOT_6, ROBOT_7, ROBOT_9])
-    ROBOT_4.set_neighbors([ROBOT_3, ROBOT_7])
-    ROBOT_5.set_neighbors([ROBOT_1, ROBOT_2, ROBOT_6, ROBOT_8])
-    ROBOT_6.set_neighbors([ROBOT_2, ROBOT_3, ROBOT_5, ROBOT_7, ROBOT_8, ROBOT_9])
-    ROBOT_7.set_neighbors([ROBOT_3, ROBOT_4, ROBOT_6, ROBOT_9])
-    # ROBOT_8.set_neighbors([ROBOT_2, ROBOT_5, ROBOT_6, ROBOT_9, ROBOT_10])
-    ROBOT_8.set_neighbors([ROBOT_2, ROBOT_5, ROBOT_6, ROBOT_9])
-    # ROBOT_9.set_neighbors([ROBOT_3, ROBOT_6, ROBOT_7, ROBOT_8, ROBOT_10])
-    ROBOT_9.set_neighbors([ROBOT_3, ROBOT_6, ROBOT_7, ROBOT_8])
-    # ROBOT_10.set_neighbors([ROBOT_6, ROBOT_8, ROBOT_9])
+    # ROBOT_1.set_neighbors([ROBOT_2, ROBOT_5])
+    # ROBOT_2.set_neighbors([ROBOT_1, ROBOT_3, ROBOT_5, ROBOT_6, ROBOT_8])
+    # ROBOT_3.set_neighbors([ROBOT_2, ROBOT_4, ROBOT_6, ROBOT_7, ROBOT_9])
+    # ROBOT_4.set_neighbors([ROBOT_3, ROBOT_7])
+    # ROBOT_5.set_neighbors([ROBOT_1, ROBOT_2, ROBOT_6, ROBOT_8])
+    # ROBOT_6.set_neighbors([ROBOT_2, ROBOT_3, ROBOT_5, ROBOT_7, ROBOT_8, ROBOT_9])
+    # ROBOT_7.set_neighbors([ROBOT_3, ROBOT_4, ROBOT_6, ROBOT_9])
+    # # ROBOT_8.set_neighbors([ROBOT_2, ROBOT_5, ROBOT_6, ROBOT_9, ROBOT_10])
+    # ROBOT_8.set_neighbors([ROBOT_2, ROBOT_5, ROBOT_6, ROBOT_9])
+    # # ROBOT_9.set_neighbors([ROBOT_3, ROBOT_6, ROBOT_7, ROBOT_8, ROBOT_10])
+    # ROBOT_9.set_neighbors([ROBOT_3, ROBOT_6, ROBOT_7, ROBOT_8])
+    # # ROBOT_10.set_neighbors([ROBOT_6, ROBOT_8, ROBOT_9])
+    
+    ROBOT_1.set_neighbors([ROBOT_5])
+    ROBOT_3.set_neighbors([ROBOT_5])
+    ROBOT_5.set_neighbors([ROBOT_1, ROBOT_3, ROBOT_7, ROBOT_9])
+    ROBOT_7.set_neighbors([ROBOT_5])
+    ROBOT_9.set_neighbors([ROBOT_5])
 
     return robots
 
@@ -629,12 +645,12 @@ def init_and_run_contagion(dances, arms, first_robot, play_state, iter):
 def test_without_arms():
     # start = time.time()
     robots = init_robots()
-    game = Game(robots, [], [])
+    game = Game(robots, [], [], 'a')
     # iterations = 10
     # game.init_audio('Joy.wav', 'Sadness.wav')
     #game.run_game(robots, 4)
     first_robot = randrange(10)
-    game.run_game_contagion(robots, 0, 20, 1)
+    game.run_game_contagion(robots, [0, 1, 3, 4], 20, 1)
     # first_robot = randrange(10)
     # game.run_game_contagion(robots, first_robot, 6, 3)
     # first_robot = randrange(10)
@@ -642,7 +658,7 @@ def test_without_arms():
 
 
 
-# test_without_arms()
+test_without_arms()
 
 
 

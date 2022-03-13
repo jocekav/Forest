@@ -154,7 +154,7 @@ def run(start):
         play_state = 'pattern_b'
         print(play_state)
         print("iter 2" + play_state)
-        game_of_life_music.init_and_run_contagion(dances, arms, 3, play_state, 5)
+        game_of_life_music.init_and_run_contagion(dances, arms, 2, play_state, 5)
         setup()
         time.sleep(9)
         for a in arms:
@@ -165,7 +165,7 @@ def run(start):
         print(play_state)
         print("iter 1" + play_state)
         # game_of_life_music_demos.init_and_run_contagion(dances, arms, 0, play_state)
-        game_of_life_music.init_and_run_contagion(dances, arms, 0, play_state, 5)
+        game_of_life_music.init_and_run_contagion(dances, arms, [0, 1, 3, 4], play_state, 5)
         setup()
         time.sleep(9)
         for a in arms:
@@ -188,7 +188,7 @@ def run(start):
         play_state = 'combine'
         print(play_state)
         print("iter 3" + play_state)
-        game_of_life_music.init_and_run_contagion(dances, arms, 5, play_state, 8)
+        game_of_life_music.init_and_run_contagion(dances, arms, [0, 1, 2, 3, 4], play_state, 8)
         setup()
         time.sleep(7)
         for a in arms:
