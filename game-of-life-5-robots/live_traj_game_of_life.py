@@ -11,7 +11,7 @@ from random import randrange
 
 # from xarm.wrapper import XArmAPI
 
-# def setup():
+# def setup(arms):
 #     for a in arms:
 #         a.set_simulation_robot(on_off=False)
 #         a.motion_enable(enable=True)
@@ -29,7 +29,7 @@ from random import randrange
 #     arm7 = XArmAPI('192.168.1.208')
 #     arm9 = XArmAPI('192.168.1.211')
 #     arms = [arm1, arm3, arm5, arm7, arm9]
-#     setup()
+#     setup(arms)
 #     repeat = input("do we need to repeat? [y/n]")
 #     if repeat == 'y':
 #         for a in arms:
@@ -101,7 +101,7 @@ class Robot:
 
     def set_first_birth(self):
         self.status = 'First Birth'
-        self.first_death()
+        self.first_birth()
 
     def set_first_death(self):
         self.status = 'First Death'
@@ -128,29 +128,32 @@ class Robot:
     def get_que(self):
         return self.que
 
+    def get_pos(self):
+        return [self.joint_1, self.joint_2, self.joint_3, self.joint_4, self.joint_5, self.joint_6, self.joint_7]
+
     def birth(self):
-        birth_move = np.array([0, (self.joint_2 - 50), 0, (self.joint_4 + 60), 0, 0, 0], dtype=object)
+        birth_move = np.array([self.joint_1, (self.joint_2 - 50), self.joint_3, (self.joint_4 + 60), self.joint_5, self.joint_6, self.joint_7], dtype=object)
         self.update_joints(birth_move)
         self.add_to_que(birth_move)
 
     def first_birth(self):
-        birth_move = np.array([0, (self.joint_2 - 20), 0, (self.joint_4 + 30), 0, 0, 0])
+        birth_move = np.array([self.joint_1, (self.joint_2 - 20), self.joint_3, (self.joint_4 + 30), self.joint_5, self.joint_6, self.joint_7])
         self.update_joints(birth_move)
         self.add_to_que(birth_move)
 
     def death(self):
-        death_move = np.array([0, (self.joint_2  + 50), 0, (self.joint_4 - 60), 0, 0, 0], dtype=object)
+        death_move = np.array([self.joint_1, (self.joint_2 + 50), self.joint_3, (self.joint_4 - 60), self.joint_5, self.joint_6, self.joint_7], dtype=object)
         self.update_joints(death_move)
         self.add_to_que(death_move)
 
     def first_death(self):
-        death_move = np.array([0, (self.joint_2 + 20), 0, (self.joint_4 - 30), 0, 0, 0])
+        death_move = np.array([self.joint_1, (self.joint_2 + 20), self.joint_3, (self.joint_4 - 30), self.joint_5, self.joint_6, self.joint_7])
         self.update_joints(death_move)
         self.add_to_que(death_move)
 
     def living(self):
-        living_move_1 = np.array([0, 0, (self.joint_3 - 15), 0, 0, 0, 0], dtype=object)
-        living_move_2 = np.array([0, 0, (self.joint_3 + 15), 0, 0, 0, 0], dtype=object)
+        living_move_1 = np.array([self.joint_1, self.joint_2, (self.joint_3 - 15), self.joint_4, self.joint_5, self.joint_6, self.joint_7], dtype=object)
+        living_move_2 = np.array([self.joint_1, self.joint_2, (self.joint_3 - 15), self.joint_4, self.joint_5, self.joint_6, self.joint_7], dtype=object)
 
         self.update_joints(living_move_1)
         self.add_to_que(living_move_1)
@@ -158,9 +161,9 @@ class Robot:
         self.add_to_que(living_move_2)
 
     def dying(self):
-        dying_move_1 = np.array([(self.joint_1 + 20), 0, 0, 0, 0, 0, 0], dtype=object)
-        dying_move_2 = np.array([(self.joint_1 - 40), 0, 0, 0, 0, 0, 0], dtype=object)
-        dying_move_3 = np.array([(self.joint_1 + 20), 0, 0, 0, 0, 0, 0], dtype=object)
+        dying_move_1 = np.array([(self.joint_1 + 20), self.joint_2, self.joint_3, self.joint_4, self.joint_5, self.joint_6, self.joint_7], dtype=object)
+        dying_move_2 = np.array([(self.joint_1 - 40), self.joint_2, self.joint_3, self.joint_4, self.joint_5, self.joint_6, self.joint_7], dtype=object)
+        dying_move_3 = np.array([(self.joint_1 + 20), self.joint_2, self.joint_3, self.joint_4, self.joint_5, self.joint_6, self.joint_7], dtype=object)
 
         self.update_joints(dying_move_1)
         self.add_to_que(dying_move_1)
@@ -171,10 +174,10 @@ class Robot:
 
     def rotate(self, angle, action):
         if action == "death":
-            rotate_move = np.array([-(self.joint_1), 0, 0, 0, 0, 0, 0], dtype=object)
+            rotate_move = np.array([-(self.joint_1), self.joint_2, self.joint_3, self.joint_4, self.joint_5, self.joint_6, self.joint_7], dtype=object)
 
         if action == "birth":
-            rotate_move = np.array([angle, 0, 0, 0, 0, 0, 0], dtype=object)
+            rotate_move = np.array([(self.joint_1 + angle), self.joint_2, self.joint_3, self.joint_4, self.joint_5, self.joint_6, self.joint_7], dtype=object)
 
         self.update_joints(rotate_move)
         self.add_to_que(rotate_move)
@@ -226,74 +229,75 @@ class Robot:
             self.joint_7 += new_angles[6] 
 
     def change_joints(self):
-        tf = 50
-        t_step = 0.006
-        t_array = np.arange(0, tf, t_step)
+        while not self.que.empty():
+            tf = 50
+            t_step = 0.006
+            t_array = np.arange(0, tf, t_step)
 
-        q_dot_f = np.zeros(7)
-        q_dotdot_f = np.zeros(7)
-        p = self.live_pos
-    
-        q = self.que.get()
+            q_dot_f = np.zeros(7)
+            q_dotdot_f = np.zeros(7)
+            p = self.live_pos
+        
+            q = self.que.get()
 
-        goal = q
+            goal = q
 
-        q_i = p
-        q_dot_i = np.zeros(7)
-        q_dotdot_i = np.zeros(7)
-        q_f = goal
+            q_i = p
+            q_dot_i = np.zeros(7)
+            q_dotdot_i = np.zeros(7)
+            q_f = goal
 
-        j = 0
+            j = 0
 
-        while j < len(t_array):
-            start_time = time.time()
+            while j < len(t_array):
+                start_time = time.time()
 
-            if abs(p[0] - q_f[0]) < 1.0 and abs(p[1] - q_f[1]) < 1.0 and abs(p[2] - q_f[2]) < 1.0 and abs(
-                    p[3] - q_f[3]) < 1.0 and abs(p[4] - q_f[4]) < 1.0 and abs(p[5] - q_f[5]) < 1.0 and abs(
-                p[6] - q_f[6]) < 1.0:
-                break
+                if abs(p[0] - q_f[0]) < 1.0 and abs(p[1] - q_f[1]) < 1.0 and abs(p[2] - q_f[2]) < 1.0 and abs(
+                        p[3] - q_f[3]) < 1.0 and abs(p[4] - q_f[4]) < 1.0 and abs(p[5] - q_f[5]) < 1.0 and abs(
+                    p[6] - q_f[6]) < 1.0:
+                    break
 
-            if j == len(t_array):
-                t = tf
-            else:
-                t = t_array[j]
+                if j == len(t_array):
+                    t = tf
+                else:
+                    t = t_array[j]
 
-            a0 = q_i
-            a1 = q_dot_i
-            a2 = []
-            a3 = []
-            a4 = []
-            a5 = []
+                a0 = q_i
+                a1 = q_dot_i
+                a2 = []
+                a3 = []
+                a4 = []
+                a5 = []
 
-            for i in range(0, 7):
-                a2.append(0.5 * q_dotdot_i[i])
-                a3.append(1.0 / (2.0 * tf ** 3.0) * (
-                        20.0 * (q_f[i] - q_i[i]) - (8.0 * q_dot_f[i] + 12.0 * q_dot_i[i]) * tf - (
-                        3.0 * q_dotdot_f[i] - q_dotdot_i[i]) * tf ** 2.0))
-                a4.append(1.0 / (2.0 * tf ** 4.0) * (
-                        30.0 * (q_i[i] - q_f[i]) + (14.0 * q_dot_f[i] + 16.0 * q_dot_i[i]) * tf + (
-                        3.0 * q_dotdot_f[i] - 2.0 * q_dotdot_i[i]) * tf ** 2.0))
-                a5.append(1.0 / (2.0 * tf ** 5.0) * (
-                        12.0 * (q_f[i] - q_i[i]) - (6.0 * q_dot_f[i] + 6.0 * q_dot_i[i]) * tf - (
-                        q_dotdot_f[i] - q_dotdot_i[i]) * tf ** 2.0))
+                for i in range(0, 7):
+                    a2.append(0.5 * q_dotdot_i[i])
+                    a3.append(1.0 / (2.0 * tf ** 3.0) * (
+                            20.0 * (q_f[i] - q_i[i]) - (8.0 * q_dot_f[i] + 12.0 * q_dot_i[i]) * tf - (
+                            3.0 * q_dotdot_f[i] - q_dotdot_i[i]) * tf ** 2.0))
+                    a4.append(1.0 / (2.0 * tf ** 4.0) * (
+                            30.0 * (q_i[i] - q_f[i]) + (14.0 * q_dot_f[i] + 16.0 * q_dot_i[i]) * tf + (
+                            3.0 * q_dotdot_f[i] - 2.0 * q_dotdot_i[i]) * tf ** 2.0))
+                    a5.append(1.0 / (2.0 * tf ** 5.0) * (
+                            12.0 * (q_f[i] - q_i[i]) - (6.0 * q_dot_f[i] + 6.0 * q_dot_i[i]) * tf - (
+                            q_dotdot_f[i] - q_dotdot_i[i]) * tf ** 2.0))
 
-                p[i] = (a0[i] + a1[i] * t + a2[i] * t ** 2 + a3[i] * t ** 3 + a4[i] * t ** 4 + a5[i] * t ** 5)
+                    p[i] = (a0[i] + a1[i] * t + a2[i] * t ** 2 + a3[i] * t ** 3 + a4[i] * t ** 4 + a5[i] * t ** 5)
 
-            # arm.set_servo_angle_j(angles=p, is_radian=False)
-            # print(f"{p} {self.num}")
-            self.f.write(",".join(str(x) for x in p))
-            self.f.write("\n")
+                # arm.set_servo_angle_j(angles=p, is_radian=False)
+                # print(f"{p} {self.num}")
+                self.f.write(",".join(str(x) for x in p))
+                self.f.write("\n")
 
-            tts = time.time() - start_time
-            sleep = t_step - tts
+                tts = time.time() - start_time
+                sleep = t_step - tts
 
-            if tts > t_step:
-                sleep = 0
+                if tts > t_step:
+                    sleep = 0
 
-            time.sleep(sleep)
-            j += 1
+                time.sleep(sleep)
+                j += 1
 
-            self.live_pos = p
+                self.live_pos = p
 
 class Game:
 
@@ -429,13 +433,18 @@ class Game:
             self.revive(robots)
 
         # call_sound(self.client, sound_states, sleep_time)
+
         self.move_state(robots)
 
 
     def run_game(self, robots, iterations):
         birth = []
         death = []
+
         for robot in robots:
+            print("Robot: " + str(robot.get_num()) + " Position: " + str(robot.get_pos()) + " " +
+                  str(robot.get_status()))
+
             random = randint(0, 2)
             if random == 1:
                 robot.set_first_birth()
@@ -448,7 +457,9 @@ class Game:
 
         curr_state = ''
         for robot in robots:
-            curr_state = curr_state + robot.get_status() + ' '
+            print("Robot: " + str(robot.get_num()) + " Position: " + str(robot.get_pos()) + " " +
+                  str(robot.get_status()))
+            # curr_state = curr_state + robot.get_status() + ' '
         print(curr_state)
 
         for robot in birth:
@@ -466,7 +477,9 @@ class Game:
             curr_state = ''
             for robot in robots:
                 curr_state = curr_state + robot.get_status() + ' '
-            print(curr_state)
+                print("Robot: " + str(robot.get_num()) + " Position: " + str(robot.get_pos()) + " " +
+                      str(robot.get_status()))
+            # print(curr_state)
 
     def change_state_contagion(self, robots, sleep_time):
         birth = []
@@ -661,5 +674,5 @@ def init_and_run_wo_robots():
 #     iterations = 2
 #     game.run_game(robots, iterations)
 
-
-init_and_run_wo_robots()
+if __name__ == '__main__':
+    init_and_run_wo_robots()
