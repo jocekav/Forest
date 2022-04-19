@@ -3,8 +3,8 @@ import numpy as np
 import math
 import pandas as pd
 import pid
-# import matplotlib
-# import matplotlib.pyplot as plt
+import matplotlib
+import matplotlib.pyplot as plt
 
 import trajectory_generation as traj
 
@@ -18,7 +18,8 @@ class Robot:
         self.joint_1_PID = None
         self.joint_2 = 0
         self.joint_2_PID = None
-        self.joint_3 = randint(0, 355)
+        # self.joint_3 = randint(0, 355)
+        self.joint_3 = 0
         self.joint_3_PID = None
         self.joint_4 = 0
         self.joint_4_PID = None
@@ -40,6 +41,9 @@ class Robot:
 
     def set_neighbors(self, neighbors):
         self.neighbors = neighbors
+
+    def set_target(self, target):
+        self.target = target
 
     def get_neighbors(self):
         return self.neighbors
@@ -150,31 +154,31 @@ class Robot:
    
     def init_PID(self, joint_nums=[1, 2, 3, 4, 5, 6, 7]):
         target_val = self.joint_1
-        self.joint_1_PID = pid.PID(5, 0.01, 0.1, setpoint=target_val)
+        self.joint_1_PID = pid.PID(0.8, 0.01, 0.1, setpoint=target_val)
         self.joint_1_PID.output_limits = (0, 360)
 
         target_val = self.joint_2
-        self.joint_2_PID = pid.PID(5, 0.01, 0.1, setpoint=target_val)
+        self.joint_2_PID = pid.PID(0.8, 0.01, 0.1, setpoint=target_val)
         self.joint_2_PID.output_limits = (0, 360)
 
         target_val = self.joint_3
-        self.joint_3_PID = pid.PID(5, 0.01, 0.1, setpoint=target_val)
+        self.joint_3_PID = pid.PID(0.8, 0.01, 0.1, setpoint=target_val)
         self.joint_3_PID.output_limits = (0, 360)
 
         target_val = self.joint_4
-        self.joint_4_PID = pid.PID(5, 0.01, 0.1, setpoint=target_val)
+        self.joint_4_PID = pid.PID(0.8, 0.01, 0.1, setpoint=target_val)
         self.joint_4_PID.output_limits = (0, 360)
 
         target_val = self.joint_5
-        self.joint_5_PID = pid.PID(5, 0.01, 0.1, setpoint=target_val)
+        self.joint_5_PID = pid.PID(0.8, 0.01, 0.1, setpoint=target_val)
         self.joint_5_PID.output_limits = (0, 360)
 
         target_val = self.joint_6
-        self.joint_6_PID = pid.PID(5, 0.01, 0.1, setpoint=target_val)
+        self.joint_6_PID = pid.PID(0.8, 0.01, 0.1, setpoint=target_val)
         self.joint_6_PID.output_limits = (0, 360)
 
         target_val = self.joint_7
-        self.joint_7_PID = pid.PID(5, 0.01, 0.1, setpoint=target_val)
+        self.joint_7_PID = pid.PID(0.8, 0.01, 0.1, setpoint=target_val)
         self.joint_7_PID.output_limits = (0, 360)
 
     
@@ -188,7 +192,7 @@ class Robot:
             align = self.align(i)
 
             if target:
-                new_angle = ((align * align_weight) + (joint * (1 - align_weight + target_weight)) + (target * target_weight)) / 3
+                new_angle = ((align * align_weight) + (joint * (1 - align_weight - target_weight)) + (self.target[i-1] * target_weight)) / 3
             else:
                 new_angle = ((align * align_weight) + (joint * (1 - align_weight))) / 2
 
@@ -239,7 +243,10 @@ class Flock:
     def run(self):
         for i in range(10):
             for robot in self.robots:
-                robot.flock(use_PID=True)
+                # robot.flock(use_PID=True)
+                # robot.flock(align_weight=0.05, target=True, target_weight=0.25, use_PID=False)
+                robot.flock(align_weight=0.005, target=False, target_weight=0.25, use_PID=False)
+            
 
 
 def init_robots():
@@ -267,26 +274,36 @@ def init_robots():
     robots = [ROBOT_1, ROBOT_2, ROBOT_3, ROBOT_4,
               ROBOT_5, ROBOT_6, ROBOT_7, ROBOT_8, ROBOT_9]
 
-    ROBOT_1.set_neighbors([ROBOT_2, ROBOT_4])
-    ROBOT_2.set_neighbors([ROBOT_1, ROBOT_3, ROBOT_5])
-    ROBOT_3.set_neighbors([ROBOT_2, ROBOT_6])
-    ROBOT_4.set_neighbors([ROBOT_1, ROBOT_5, ROBOT_7])
-    ROBOT_5.set_neighbors([ROBOT_2, ROBOT_4, ROBOT_6, ROBOT_8])
-    ROBOT_6.set_neighbors([ROBOT_3, ROBOT_5, ROBOT_9])
-    ROBOT_7.set_neighbors([ROBOT_4, ROBOT_8])
-    ROBOT_8.set_neighbors([ROBOT_5, ROBOT_7, ROBOT_9])
-    ROBOT_9.set_neighbors([ROBOT_6, ROBOT_8])
+    # ROBOT_1.set_neighbors([ROBOT_2, ROBOT_4])
+    # ROBOT_2.set_neighbors([ROBOT_1, ROBOT_3, ROBOT_5])
+    # ROBOT_3.set_neighbors([ROBOT_2, ROBOT_6])
+    # ROBOT_4.set_neighbors([ROBOT_1, ROBOT_5, ROBOT_7])
+    # ROBOT_5.set_neighbors([ROBOT_2, ROBOT_4, ROBOT_6, ROBOT_8])
+    # ROBOT_6.set_neighbors([ROBOT_3, ROBOT_5, ROBOT_9])
+    # ROBOT_7.set_neighbors([ROBOT_4, ROBOT_8])
+    # ROBOT_8.set_neighbors([ROBOT_5, ROBOT_7, ROBOT_9])
+    # ROBOT_9.set_neighbors([ROBOT_6, ROBOT_8])
+
+    ROBOT_1.set_target([0, 0, 0, 0, randint(0, 350), 0, 0])
+    ROBOT_2.set_target([0, 0, 0, 0, randint(0, 350), 0, 0])
+    ROBOT_3.set_target([0, 0, 0, 0, randint(0, 350), 0, 0])
+    ROBOT_4.set_target([0, 0, 0, 0, randint(0, 350), 0, 0])
+    ROBOT_5.set_target([0, 0, 0, 0, randint(0, 350), 0, 0])
+    ROBOT_6.set_target([0, 0, 0, 0, randint(0, 350), 0, 0])
+    ROBOT_7.set_target([0, 0, 0, 0, randint(0, 350), 0, 0])
+    ROBOT_8.set_target([0, 0, 0, 0, randint(0, 350), 0, 0])
+    ROBOT_9.set_target([0, 0, 0, 0, randint(0, 350), 0, 0])
 
     # With diagonal neighbors
-    # ROBOT_1.set_neighbors([ROBOT_2, ROBOT_4, ROBOT_5])
-    # ROBOT_2.set_neighbors([ROBOT_1, ROBOT_3, ROBOT_4, ROBOT_5, ROBOT_6])
-    # ROBOT_3.set_neighbors([ROBOT_2, ROBOT_5, ROBOT_6])
-    # ROBOT_4.set_neighbors([ROBOT_1, ROBOT_2, ROBOT_5, ROBOT_7, ROBOT_8])
-    # ROBOT_5.set_neighbors([ROBOT_2, ROBOT_3, ROBOT_4, ROBOT_5, ROBOT_6, ROBOT_7, ROBOT_8])
-    # ROBOT_6.set_neighbors([ROBOT_2, ROBOT_3, ROBOT_5, ROBOT_8, ROBOT_9])
-    # ROBOT_7.set_neighbors([ROBOT_4, ROBOT_5, ROBOT_8])
-    # ROBOT_8.set_neighbors([ROBOT_4, ROBOT_5, ROBOT_6, ROBOT_7, ROBOT_9])
-    # ROBOT_9.set_neighbors([ROBOT_5, ROBOT_6, ROBOT_8])
+    ROBOT_1.set_neighbors([ROBOT_2, ROBOT_4, ROBOT_5])
+    ROBOT_2.set_neighbors([ROBOT_1, ROBOT_3, ROBOT_4, ROBOT_5, ROBOT_6])
+    ROBOT_3.set_neighbors([ROBOT_2, ROBOT_5, ROBOT_6])
+    ROBOT_4.set_neighbors([ROBOT_1, ROBOT_2, ROBOT_5, ROBOT_7, ROBOT_8])
+    ROBOT_5.set_neighbors([ROBOT_2, ROBOT_3, ROBOT_4, ROBOT_5, ROBOT_6, ROBOT_7, ROBOT_8])
+    ROBOT_6.set_neighbors([ROBOT_2, ROBOT_3, ROBOT_5, ROBOT_8, ROBOT_9])
+    ROBOT_7.set_neighbors([ROBOT_4, ROBOT_5, ROBOT_8])
+    ROBOT_8.set_neighbors([ROBOT_4, ROBOT_5, ROBOT_6, ROBOT_7, ROBOT_9])
+    ROBOT_9.set_neighbors([ROBOT_5, ROBOT_6, ROBOT_8])
 
     return robots
 
@@ -316,17 +333,26 @@ def print_dance(robots, final_time):
         # df.to_csv("/home/codmusic/Desktop/FOREST/Jocelyn_Scripts/flock.csv", header=False, index=False)
         df.to_csv("/Users/jocekav/Documents/GitHub/Forest/flock.csv", header=False, index=False)
         #
-        # final_trajectory = velocity
-        # final_trajectory = np.transpose(final_trajectory)
+        final_trajectory = velocity
+        final_trajectory = np.transpose(final_trajectory)
         #
-        # for robot in robots:
-        #     robot_pos = robot.get_num() * 7
-        #     robot_vel = []
-        #     for i in range(7):
-                # print(len(final_trajectory[(i+robot_pos), :]))
-                # print(np.max(final_trajectory[(i+robot_pos), :]))
-            #     plt.plot(final_trajectory[:, (i+robot_pos)])
-            # plt.show()
+        for robot in robots:
+            robot_pos = robot.get_num() * 7
+            robot_vel = []
+            for i in range(7):
+                print(len(final_trajectory[(i+robot_pos), :]))
+                print(np.max(final_trajectory[(i+robot_pos), :]))
+                plt.plot(final_trajectory[:, (i+robot_pos)])
+            plt.show()
+
+        for robot in robots:
+            robot_pos = robot.get_num() * 7
+            robot_vel = []
+            for i in range(7):
+                print(len(final_position[(i+robot_pos), :]))
+                print(np.max(final_position[(i+robot_pos), :]))
+                plt.plot(final_position[:, (i+robot_pos)])
+            plt.show()
 
         
         # pd.DataFrame(final_trajectory).to_csv("flock_vel.csv", header=False, index=False)
