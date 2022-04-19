@@ -1,18 +1,44 @@
 from random import randint
 import numpy as np
 # import trajectory_generation as traj
-import pandas as pd
 import csv
 
-from sqlalchemy import false
-
-import play_dances_gameoflife
 import threading
 import queue
 import time
 # from pythonosc import udp_client
 from random import randrange
 
+# from xarm.wrapper import XArmAPI
+
+# def setup():
+#     for a in arms:
+#         a.set_simulation_robot(on_off=False)
+#         a.motion_enable(enable=True)
+#         a.clean_warn()
+#         a.clean_error()
+#         a.set_mode(0)
+#         a.set_state(0)
+#         a.set_servo_angle(angle=[0.0, 0.0, 0.0, 1.57, 0.0, 0, 0.0], wait=False, speed=0.4, acceleration=0.25,
+#                           is_radian=True)
+
+# def run_robots():
+#     arm1 = XArmAPI('192.168.1.203')
+#     arm3 = XArmAPI('192.168.1.236')
+#     arm5 = XArmAPI('192.168.1.234')
+#     arm7 = XArmAPI('192.168.1.208')
+#     arm9 = XArmAPI('192.168.1.211')
+#     arms = [arm1, arm3, arm5, arm7, arm9]
+#     setup()
+#     repeat = input("do we need to repeat? [y/n]")
+#     if repeat == 'y':
+#         for a in arms:
+#             print('state:', arm1.state)
+#             print('mode:', arm1.mode)
+#         setup()
+#     for a in arms:
+#         a.set_mode(1)
+#         a.set_state(0)
 
 class Robot:
     def __init__(self, num):
@@ -369,7 +395,7 @@ class Game:
         if move == "birth" or move == "death":
             for robot in robots:
                 neighbors = robot.get_neighbors()
-                has_rotate = false
+                # has_rotate = false
                 if move == "birth":
                     robot.rotate(neighbors[0][1], move)
                 if move == "death":
@@ -622,11 +648,18 @@ def init_robots():
     return robots
 
 
-def init_and_run():
+def init_and_run_wo_robots():
     robots = init_robots()
     game = Game(robots)
     iterations = 2
     game.run_game(robots, iterations)
 
+# def init_and_run():
+#     run_robots()
+#     robots = init_robots()
+#     game = Game(robots)
+#     iterations = 2
+#     game.run_game(robots, iterations)
 
-init_and_run()
+
+init_and_run_wo_robots()
