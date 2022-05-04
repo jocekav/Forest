@@ -5,7 +5,7 @@ import collections
 INIT_POS = np.zeros(7)
 MAX_VEl = np.zeros(7) + 180
 MAX_ACC = np.zeros(7) + 1000
-NUM_ROBOTS = 9
+NUM_ROBOTS = 1
 NUM_JOINTS = 7
 
 BPM = 50
@@ -23,7 +23,7 @@ def generate_trajectory(dances_arr, dances_time_arr, final_time):
         routine = dances_arr[robot]
         routine_time = dances_time_arr[robot]
         
-        num_elem = sum(len(x) for x in routine)
+        # num_elem = sum(len(x) for x in routine)
         # joints_phase = np.zeros((7, 1 + int(num_elem / 7)))
         joints_phase = []
         # joints_time = np.zeros((7, 1 + int(num_elem / 7)))
@@ -123,6 +123,11 @@ def generate_trajectory(dances_arr, dances_time_arr, final_time):
                 q_i = q_i + joints_phase[joint][ind]
                 ind += 1
     return trajectory, velocity
+
+joints = [[[0, -110, 0], [15, 2, -50, 0], 0, [30, 0, -50, 0], [0], [0], [0, 0]]]
+times = [[[1, 3, 2], [2, 1, 2, 1], 6, [2, 1, 2, 1], [6], [6], [2, 4]]]
+
+generate_trajectory(joints, times, 5)
 
 
 

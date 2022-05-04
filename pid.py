@@ -98,11 +98,13 @@ class PID(object):
         if not self.auto_mode:
             return self._last_output
 
-        now = _current_time()
-        if dt is None:
-            dt = now - self._last_time if (now - self._last_time) else 1e-16
-        elif dt <= 0:
-            raise ValueError('dt has negative value {}, must be positive'.format(dt))
+        # now = _current_time()
+        # if dt is None:
+        #     dt = now - self._last_time if (now - self._last_time) else 1e-16
+        # elif dt <= 0:
+        #     raise ValueError('dt has negative value {}, must be positive'.format(dt))
+
+        dt = 1
 
         if self.sample_time is not None and dt < self.sample_time and self._last_output is not None:
             # Only update every sample_time seconds
@@ -137,7 +139,7 @@ class PID(object):
         # Keep track of state
         self._last_output = output
         self._last_input = input_
-        self._last_time = now
+        # self._last_time = now
 
         return output
 
